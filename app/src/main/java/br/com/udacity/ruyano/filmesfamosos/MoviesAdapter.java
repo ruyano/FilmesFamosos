@@ -58,7 +58,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder
 
         public void bind(Result movie) {
             movieName.setText(movie.getTitle());
-            Glide.with(context).load(movie.getPosterPath()).into(movieBanner);
+            Glide.with(context).load(movie.getPosterPath()).thumbnail(0.01f).into(movieBanner);
         }
 
     }
