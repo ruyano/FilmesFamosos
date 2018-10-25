@@ -3,17 +3,44 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    android:background="@color/background"
+    tools:context=".ui.MainActivity">
 
     <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_movies"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
         tools:itemCount="5"
         tools:layoutManager="android.support.v7.widget.GridLayoutManager"
         tools:listitem="@layout/movie_grid_item"
         tools:orientation="vertical"
         tools:scrollbars="vertical"
-        tools:spanCount="2"
-        android:id="@+id/rv_movies"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        tools:spanCount="2" />
+
+    <LinearLayout
+        android:id="@+id/ll_status_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_centerInParent="true"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/iv_status_image"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/loading" />
+
+        <TextView
+            android:id="@+id/tv_status_text"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:textColor="@color/error"
+            android:gravity="center"
+            android:layout_below="@+id/iv_status_image"
+            android:text="@string/no_internet_message"/>
+
+    </LinearLayout>
 
 </RelativeLayout>

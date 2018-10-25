@@ -17,7 +17,7 @@ public class RequestResult {
     private Integer totalPages;
 
     @SerializedName("results")
-    private List<Result> results = null;
+    private ArrayList<Result> results = null;
 
     public Integer getPage() {
         return page;
@@ -47,21 +47,8 @@ public class RequestResult {
         return results;
     }
 
-    public void setResults(List<Result> results) {
+    public void setResults(ArrayList<Result> results) {
         this.results = results;
-    }
-
-    public static ArrayList<Result> getMock(int count) {
-        ArrayList<Result> mock = new ArrayList<>();
-
-        for(int i = 0; i<count; i++) {
-            Result item = new Result();
-            item.setTitle("Teste Mock " + i);
-            item.setPosterPath("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRcx0M6Wbwzyw0scnLT1sylUJnnhqF7MsoefKJlvvg_7lzP-ypC9KVx3Zk");
-            mock.add(item);
-        }
-
-        return mock;
     }
 
 }
