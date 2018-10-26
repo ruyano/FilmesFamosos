@@ -18,5 +18,8 @@ public interface IAPIService {
     @GET("movie/popular")
     Call<RequestResult> getPopularMovies(@Query("page") Integer page);
 
+    @GET("movie/top_rated")
+    Call<RequestResult> getTopRatedMovies(@Query("page") Integer page);
+
 
 }

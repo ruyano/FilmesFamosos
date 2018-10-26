@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import br.com.udacity.ruyano.filmesfamosos.R;
@@ -37,6 +39,9 @@ public class MovieDetailsActivity extends AppCompatActivity {
 
     @BindView(R.id.uev_users_evaluation_view)
     UsersEvaluationView uevUsersEvaluationView;
+
+    @BindView(R.id.rl_adult_view)
+    RelativeLayout rlAdultView;
 
     private Result movie;
 
@@ -86,6 +91,12 @@ public class MovieDetailsActivity extends AppCompatActivity {
                 movie.getPosterPath(),
                 ivMovieBanner,
                 ImageQuality.MEDIUM);
+
+        if (movie.getAdult()) {
+            rlAdultView.setVisibility(View.VISIBLE);
+        } else {
+            rlAdultView.setVisibility(View.GONE);
+        }
     }
 
     @Override

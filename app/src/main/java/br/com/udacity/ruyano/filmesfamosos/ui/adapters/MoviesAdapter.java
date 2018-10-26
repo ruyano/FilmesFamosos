@@ -7,6 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import java.util.ArrayList;
 
@@ -54,6 +56,9 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder
         @BindView(R.id.uev_users_evaluation_view)
         UsersEvaluationView uevUsersEvaluationView;
 
+        @BindView(R.id.rl_adult_view)
+        RelativeLayout rlAdultView;
+
         public ViewHolder(@NonNull final View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
@@ -67,17 +72,23 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder
                     ImageQuality.MEDIUM);
 
             uevUsersEvaluationView.setValue(movie.getVoteAverage());
+
+            if (movie.getAdult()) {
+                rlAdultView.setVisibility(View.VISIBLE);
+            } else {
+                rlAdultView.setVisibility(View.GONE);
+            }
         }
 
         @Override
         public void onClick(View v) {
-            itemClickListener.itemCliked(getAdapterPosition(), ivMovieBanner, uevUsersEvaluationView);
+            itemClickListener.itemCliked(getAdapterPosition(), ivMovieBanner, uevUsersEvaluationView, rlAdultView);
         }
     }
 
     public interface MoviesAdapterOnItemClickListener {
 
-        void itemCliked(Integer position, ImageView ivMovieBanner, UsersEvaluationView uevUsersEvaluationView);
+        void itemCliked(Integer position, ImageView ivMovieBanner, UsersEvaluationView uevUsersEvaluationView, RelativeLayout rlAdultView);
 
     }
 }

@@ -8,10 +8,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Pair;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
@@ -51,6 +56,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private MoviesAdapter moviesAdapter;
     private ArrayList<Result> movies = new ArrayList<>();
 
+    private Boolean isRequestingPopular = true;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,6 +69,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         } else {
             init();
             requestFirstPage();
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.popular:
+                isRequestingPopular = true;
+                requestFirstPage();
+                return true;
+            case R.id.avaliation:
+                isRequestingPopular = false;
+                requestFirstPage();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 
@@ -107,14 +137,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         moviesAdapter = new MoviesAdapter(this, movies, new MoviesAdapter.MoviesAdapterOnItemClickListener() {
             @Override
-            public void itemCliked(Integer position, ImageView ivMovieBanner, UsersEvaluationView uevUsersEvaluationView) {
+            public void itemCliked(Integer position, ImageView ivMovieBanner, UsersEvaluationView uevUsersEvaluationView, RelativeLayout rlAdultView) {
                 Intent intent = MovieDetailsActivity.getIntent(MainActivity.this, movies.get(position));
 
                 Pair bannerPair = Pair.create(ivMovieBanner, getString(R.string.activity_mixed_trans_banner));
                 Pair evaluationPair = Pair.create(uevUsersEvaluationView, getString(R.string.activity_mixed_trans_evaluation));
+                Pair adultPair = Pair.create(rlAdultView, getString(R.string.activity_mixed_trans_adult));
 
-                ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(MainActivity.this, evaluationPair, bannerPair);
-
+                ActivityOptions options;
+                if (rlAdultView.getVisibility() == View.VISIBLE) {
+                    options = ActivityOptions.makeSceneTransitionAnimation(MainActivity.this, evaluationPair, adultPair, bannerPair);
+                } else {
+                    options = ActivityOptions.makeSceneTransitionAnimation(MainActivity.this, evaluationPair, bannerPair);
+                }
                 startActivity(intent, options.toBundle());
             }
         });
@@ -141,7 +176,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void request(Integer page) {
 
-        APIClient.getInstance().getPopularMovies(page, new RetrofitConfig.OnRestResponseListener<RequestResult>() {
+        RetrofitConfig.OnRestResponseListener serviceListener = new RetrofitConfig.OnRestResponseListener<RequestResult>() {
             @Override
             public void onRestSuccess(RequestResult response) {
                 srlSwipeToRefreshLayout.setRefreshing(false);
@@ -163,7 +198,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 srlSwipeToRefreshLayout.setRefreshing(false);
                 shoShameErrorView();
             }
-        });
+        };
+
+
+        if (isRequestingPopular) {
+            APIClient.getInstance().getPopularMovies(page, serviceListener);
+        } else {
+            APIClient.getInstance().getTopRatedMovies(page, serviceListener);
+        }
 
     }
 

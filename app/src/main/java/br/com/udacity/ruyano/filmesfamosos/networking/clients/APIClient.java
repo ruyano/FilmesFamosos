@@ -1,6 +1,5 @@
 package br.com.udacity.ruyano.filmesfamosos.networking.clients;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import br.com.udacity.ruyano.filmesfamosos.model.Language;
@@ -47,6 +46,24 @@ public class APIClient {
 
     public void getPopularMovies(Integer page, final RetrofitConfig.OnRestResponseListener<RequestResult> listener) {
         this.service.getPopularMovies(page).enqueue(new Callback<RequestResult>() {
+            @Override
+            public void onResponse(Call<RequestResult> call, Response<RequestResult> response) {
+                if (response.isSuccessful()) {
+                    listener.onRestSuccess(response.body());
+                } else {
+                    listener.onRestError(response.errorBody(), response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<RequestResult> call, Throwable t) {
+                listener.onFailure(t.getMessage());
+            }
+        });
+    }
+
+    public void getTopRatedMovies(Integer page, final RetrofitConfig.OnRestResponseListener<RequestResult> listener) {
+        this.service.getTopRatedMovies(page).enqueue(new Callback<RequestResult>() {
             @Override
             public void onResponse(Call<RequestResult> call, Response<RequestResult> response) {
                 if (response.isSuccessful()) {

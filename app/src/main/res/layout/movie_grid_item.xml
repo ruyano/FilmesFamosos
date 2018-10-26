@@ -12,35 +12,44 @@
         android:adjustViewBounds="true"
         android:padding="5dp"
         android:scaleType="fitXY"
-        android:transitionName="@string/activity_mixed_trans_evaluation"
+        android:transitionName="@string/activity_mixed_trans_banner"
         tools:src="@color/colorPrimaryDark" />
 
-    <RelativeLayout
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_margin="10dp">
-
-        <ImageView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-
-            android:src="@drawable/circle_background" />
-
-        <ImageView
-            android:id="@+id/iv_adults_only"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_margin="5dp"
-            android:src="@drawable/ic_plus_18_movie" />
-
-    </RelativeLayout>
-
-    <br.com.udacity.ruyano.filmesfamosos.util.UsersEvaluationView
-        android:id="@+id/uev_users_evaluation_view"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_margin="10dp"
-        android:transitionName="@string/activity_mixed_trans_evaluation" />
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:id="@+id/rl_adult_view"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginRight="10dp"
+            android:transitionName="@string/activity_mixed_trans_adult"
+            android:visibility="gone">
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/circle_background" />
+
+            <ImageView
+                android:id="@+id/iv_adults_only"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_margin="5dp"
+                android:src="@drawable/ic_plus_18_movie" />
+
+        </RelativeLayout>
+
+        <br.com.udacity.ruyano.filmesfamosos.util.UsersEvaluationView
+            android:id="@+id/uev_users_evaluation_view"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:transitionName="@string/activity_mixed_trans_evaluation" />
+
+    </LinearLayout>
 
 </RelativeLayout>

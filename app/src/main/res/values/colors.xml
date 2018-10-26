@@ -5,7 +5,25 @@
     <color name="colorAccent">#D81B60</color>
 
     <color name="background">#5F4B8B</color>
-    <color name="error">#FFFF</color>
+    <color name="error">#ffffff</color>
     <color name="text">#ffffff</color>
+
+    <color name="circle_background">#80000000</color>
+
+
+    <color name="progress_high_score">#98FB98</color>
+    <color name="progress_high_score_background">#008000</color>
+
+    <color name="progress_good_score">#FFFF00</color>
+    <color name="progress_good_score_background">#999900</color>
+
+    <color name="progress_low_score">#FFA500</color>
+    <color name="progress_low_score_background">#FF8C00</color>
+
+    <color name="progress_lowest_score">#FF0000</color>
+    <color name="progress_lowest_score_background">#B22222</color>
+
+    <color name="progress_none_score">#ffffff</color>
+    <color name="progress_none_score_background">#ffffff</color>
 
 </resources>

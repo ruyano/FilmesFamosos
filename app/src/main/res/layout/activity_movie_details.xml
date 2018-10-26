@@ -9,30 +9,16 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-            <ImageView
-                android:id="@+id/iv_movie_backdrop"
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:adjustViewBounds="true"
-                android:scaleType="fitXY"
-                tools:src="@color/colorPrimaryDark" />
-
-            <br.com.udacity.ruyano.filmesfamosos.util.UsersEvaluationView
-                android:id="@+id/uev_users_evaluation_view"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_alignParentRight="true"
-                android:transitionName="@string/activity_mixed_trans_evaluation"
-                android:layout_margin="10dp"/>
-
-        </RelativeLayout>
+        <ImageView
+            android:id="@+id/iv_movie_backdrop"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:adjustViewBounds="true"
+            android:scaleType="fitXY"
+            tools:src="@color/colorPrimaryDark" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -72,6 +58,42 @@
                     android:text="dd/MM/yyyy"
                     android:textColor="@color/text"
                     android:textSize="14sp" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:orientation="horizontal">
+
+                    <br.com.udacity.ruyano.filmesfamosos.util.UsersEvaluationView
+                        android:id="@+id/uev_users_evaluation_view"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_marginEnd="10dp"
+                        android:transitionName="@string/activity_mixed_trans_evaluation" />
+
+                    <RelativeLayout
+                        android:id="@+id/rl_adult_view"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:visibility="gone"
+                        android:transitionName="@string/activity_mixed_trans_adult">
+
+                        <ImageView
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:src="@drawable/circle_background" />
+
+                        <ImageView
+                            android:id="@+id/iv_adults_only"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_margin="5dp"
+                            android:src="@drawable/ic_plus_18_movie" />
+
+                    </RelativeLayout>
+
+                </LinearLayout>
 
             </LinearLayout>
 
