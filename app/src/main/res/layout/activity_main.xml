@@ -6,24 +6,31 @@
     android:background="@color/background"
     tools:context=".ui.MainActivity">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_movies"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/srl_swipe_to_refresh_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone"
-        tools:itemCount="5"
-        tools:layoutManager="android.support.v7.widget.GridLayoutManager"
-        tools:listitem="@layout/movie_grid_item"
-        tools:orientation="vertical"
-        tools:scrollbars="vertical"
-        tools:spanCount="2" />
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_movies"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            tools:itemCount="5"
+            tools:layoutManager="android.support.v7.widget.GridLayoutManager"
+            tools:listitem="@layout/movie_grid_item"
+            tools:orientation="vertical"
+            tools:scrollbars="vertical"
+            tools:spanCount="2" />
+
+    </android.support.v4.widget.SwipeRefreshLayout>
 
     <LinearLayout
         android:id="@+id/ll_status_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center"
         android:layout_centerInParent="true"
+        android:gravity="center"
         android:orientation="vertical">
 
         <ImageView
@@ -36,10 +43,10 @@
             android:id="@+id/tv_status_text"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:textColor="@color/error"
-            android:gravity="center"
             android:layout_below="@+id/iv_status_image"
-            android:text="@string/no_internet_message"/>
+            android:gravity="center"
+            android:text="@string/no_internet_message"
+            android:textColor="@color/error" />
 
     </LinearLayout>
 

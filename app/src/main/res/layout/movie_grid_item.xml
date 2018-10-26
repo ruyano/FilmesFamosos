@@ -8,10 +8,39 @@
         android:id="@+id/iv_movie_banner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="5dp"
-        android:scaleType="fitCenter"
+        android:layout_centerInParent="true"
         android:adjustViewBounds="true"
-        tools:src="@color/colorPrimaryDark"
-        android:transitionName="@string/activity_mixed_trans"/>
+        android:padding="5dp"
+        android:scaleType="fitXY"
+        android:transitionName="@string/activity_mixed_trans_evaluation"
+        tools:src="@color/colorPrimaryDark" />
+
+    <RelativeLayout
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_margin="10dp">
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+
+            android:src="@drawable/circle_background" />
+
+        <ImageView
+            android:id="@+id/iv_adults_only"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="5dp"
+            android:src="@drawable/ic_plus_18_movie" />
+
+    </RelativeLayout>
+
+    <br.com.udacity.ruyano.filmesfamosos.util.UsersEvaluationView
+        android:id="@+id/uev_users_evaluation_view"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignParentRight="true"
+        android:layout_margin="10dp"
+        android:transitionName="@string/activity_mixed_trans_evaluation" />
 
 </RelativeLayout>

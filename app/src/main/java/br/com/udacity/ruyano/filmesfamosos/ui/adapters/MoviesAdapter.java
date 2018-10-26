@@ -14,6 +14,7 @@ import br.com.udacity.ruyano.filmesfamosos.R;
 import br.com.udacity.ruyano.filmesfamosos.model.Result;
 import br.com.udacity.ruyano.filmesfamosos.util.GlideUtil;
 import br.com.udacity.ruyano.filmesfamosos.util.ImageQuality;
+import br.com.udacity.ruyano.filmesfamosos.util.UsersEvaluationView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -50,6 +51,9 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder
         @BindView(R.id.iv_movie_banner)
         ImageView ivMovieBanner;
 
+        @BindView(R.id.uev_users_evaluation_view)
+        UsersEvaluationView uevUsersEvaluationView;
+
         public ViewHolder(@NonNull final View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
@@ -61,17 +65,19 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder
                     movie.getPosterPath(),
                     ivMovieBanner,
                     ImageQuality.MEDIUM);
+
+            uevUsersEvaluationView.setValue(movie.getVoteAverage());
         }
 
         @Override
         public void onClick(View v) {
-            itemClickListener.itemCliked(getAdapterPosition(), ivMovieBanner);
+            itemClickListener.itemCliked(getAdapterPosition(), ivMovieBanner, uevUsersEvaluationView);
         }
     }
 
     public interface MoviesAdapterOnItemClickListener {
 
-        void itemCliked(Integer position, ImageView ivMovieBanner);
+        void itemCliked(Integer position, ImageView ivMovieBanner, UsersEvaluationView uevUsersEvaluationView);
 
     }
 }

@@ -3,13 +3,15 @@ package br.com.udacity.ruyano.filmesfamosos.ui;
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Pair;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
@@ -21,15 +23,20 @@ import br.com.udacity.ruyano.filmesfamosos.model.Result;
 import br.com.udacity.ruyano.filmesfamosos.networking.RetrofitConfig;
 import br.com.udacity.ruyano.filmesfamosos.networking.clients.APIClient;
 import br.com.udacity.ruyano.filmesfamosos.ui.adapters.MoviesAdapter;
+import br.com.udacity.ruyano.filmesfamosos.util.EndlessRecyclerViewScrollListener;
 import br.com.udacity.ruyano.filmesfamosos.util.NetworkUtil;
+import br.com.udacity.ruyano.filmesfamosos.util.UsersEvaluationView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import okhttp3.ResponseBody;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
 
     @BindView(R.id.rv_movies)
     RecyclerView rvMovies;
+
+    @BindView(R.id.srl_swipe_to_refresh_layout)
+    SwipeRefreshLayout srlSwipeToRefreshLayout;
 
     @BindView(R.id.iv_status_image)
     ImageView ivStatusImage;
@@ -37,6 +44,10 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.tv_status_text)
     TextView tvStatusText;
 
+    @BindView(R.id.ll_status_view)
+    LinearLayout llStatusView;
+
+    private EndlessRecyclerViewScrollListener scrollListener;
     private MoviesAdapter moviesAdapter;
     private ArrayList<Result> movies = new ArrayList<>();
 
@@ -49,9 +60,8 @@ public class MainActivity extends AppCompatActivity {
         if (!NetworkUtil.isConected(this)) {
             showNoInternetView();
         } else {
-            initRecyclerView();
-            showLoading();
-            request();
+            init();
+            requestFirstPage();
         }
     }
 
@@ -90,45 +100,85 @@ public class MainActivity extends AppCompatActivity {
         rvMovies.setVisibility(View.VISIBLE);
     }
 
-    private void initRecyclerView() {
+    private void init() {
+        srlSwipeToRefreshLayout.setOnRefreshListener(this);
+        srlSwipeToRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
+        llStatusView.setOnClickListener(this);
+
         moviesAdapter = new MoviesAdapter(this, movies, new MoviesAdapter.MoviesAdapterOnItemClickListener() {
             @Override
-            public void itemCliked(Integer position, ImageView ivMovieBanner) {
+            public void itemCliked(Integer position, ImageView ivMovieBanner, UsersEvaluationView uevUsersEvaluationView) {
                 Intent intent = MovieDetailsActivity.getIntent(MainActivity.this, movies.get(position));
-                ActivityOptions options = ActivityOptions
-                        .makeSceneTransitionAnimation(MainActivity.this,
-                                ivMovieBanner,
-                                getString(R.string.activity_mixed_trans));
+
+                Pair bannerPair = Pair.create(ivMovieBanner, getString(R.string.activity_mixed_trans_banner));
+                Pair evaluationPair = Pair.create(uevUsersEvaluationView, getString(R.string.activity_mixed_trans_evaluation));
+
+                ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(MainActivity.this, evaluationPair, bannerPair);
+
                 startActivity(intent, options.toBundle());
             }
         });
 
-        rvMovies.setLayoutManager(new GridLayoutManager(this, 2));
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
+        rvMovies.setLayoutManager(gridLayoutManager);
         rvMovies.setAdapter(moviesAdapter);
-
+        scrollListener = new EndlessRecyclerViewScrollListener(gridLayoutManager) {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+                request(page);
+            }
+        };
+        rvMovies.addOnScrollListener(scrollListener);
     }
 
-    private void request() {
+    private void requestFirstPage() {
+        showLoading();
+        movies.clear();
+        moviesAdapter.notifyDataSetChanged();
+        scrollListener.resetState();
+        request(1);
+    }
 
-        APIClient.getInstance().getPopularMovies(new RetrofitConfig.OnRestResponseListener<RequestResult>() {
+    private void request(Integer page) {
+
+        APIClient.getInstance().getPopularMovies(page, new RetrofitConfig.OnRestResponseListener<RequestResult>() {
             @Override
             public void onRestSuccess(RequestResult response) {
-                movies.clear();
-                movies.addAll(response.getResults());
-                moviesAdapter.notifyDataSetChanged();
+                srlSwipeToRefreshLayout.setRefreshing(false);
+                for(Result movie : response.getResults()) {
+                    movies.add(movie);
+                    moviesAdapter.notifyItemChanged(movies.size());
+                }
                 hideLoading();
             }
 
             @Override
             public void onRestError(ResponseBody body, int code) {
+                srlSwipeToRefreshLayout.setRefreshing(false);
                 shoShameErrorView();
             }
 
             @Override
             public void onFailure(String str) {
+                srlSwipeToRefreshLayout.setRefreshing(false);
                 shoShameErrorView();
             }
         });
 
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.ll_status_view:
+                requestFirstPage();
+                break;
+        }
+    }
+
+    @Override
+    public void onRefresh() {
+        srlSwipeToRefreshLayout.setRefreshing(true);
+        requestFirstPage();
     }
 }

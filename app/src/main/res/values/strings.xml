@@ -1,7 +1,8 @@
 <resources>
     <string name="app_name">Filmes Famosos</string>
 
-    <string name="activity_mixed_trans">activity_mixed_trans</string>
+    <string name="activity_mixed_trans_banner">activity_mixed_trans_banner</string>
+    <string name="activity_mixed_trans_evaluation">activity_mixed_trans_evaluation</string>
 
     <string name="no_internet_message">Ops. Parece que você está sem internet, verifique sua conexão e tente novamente!</string>
     <string name="shame_error">Ops. Estamos passando por dificuldades técnicas, por favor tente novamente mais tarde!</string>

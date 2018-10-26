@@ -6,11 +6,13 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import br.com.udacity.ruyano.filmesfamosos.R;
 import br.com.udacity.ruyano.filmesfamosos.model.Result;
 import br.com.udacity.ruyano.filmesfamosos.util.GlideUtil;
 import br.com.udacity.ruyano.filmesfamosos.util.ImageQuality;
+import br.com.udacity.ruyano.filmesfamosos.util.UsersEvaluationView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -23,6 +25,18 @@ public class MovieDetailsActivity extends AppCompatActivity {
 
     @BindView(R.id.iv_movie_banner)
     ImageView ivMovieBanner;
+
+    @BindView(R.id.tv_movie_name)
+    TextView tvMovieName;
+
+    @BindView(R.id.tv_release_date)
+    TextView tvReleaseDate;
+
+    @BindView(R.id.tv_overview)
+    TextView tvOverview;
+
+    @BindView(R.id.uev_users_evaluation_view)
+    UsersEvaluationView uevUsersEvaluationView;
 
     private Result movie;
 
@@ -57,6 +71,11 @@ public class MovieDetailsActivity extends AppCompatActivity {
 
     private void populateView() {
         getSupportActionBar().setTitle(movie.getTitle());
+        tvMovieName.setText(movie.getTitle());
+        tvReleaseDate.setText(movie.getReleaseDateString());
+        tvOverview.setText(movie.getOverview());
+
+        uevUsersEvaluationView.setValue(movie.getVoteAverage());
 
         GlideUtil.loadImage(this,
                 movie.getBackdropPath(),
@@ -66,7 +85,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
         GlideUtil.loadImage(this,
                 movie.getPosterPath(),
                 ivMovieBanner,
-                ImageQuality.LOW);
+                ImageQuality.MEDIUM);
     }
 
     @Override

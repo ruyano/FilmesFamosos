@@ -5,7 +5,9 @@ import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class Result implements Parcelable {
@@ -50,7 +52,7 @@ public class Result implements Parcelable {
     private String overview;
 
     @SerializedName("release_date")
-    private String releaseDate;
+    private Date releaseDate;
 
     public Integer getVoteCount() {
         return voteCount;
@@ -156,11 +158,16 @@ public class Result implements Parcelable {
         this.overview = overview;
     }
 
-    public String getReleaseDate() {
+    public Date getReleaseDate() {
         return releaseDate;
     }
 
-    public void setReleaseDate(String releaseDate) {
+    public String getReleaseDateString() {
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        return format.format(releaseDate);
+    }
+
+    public void setReleaseDate(Date releaseDate) {
         this.releaseDate = releaseDate;
     }
 
@@ -186,7 +193,7 @@ public class Result implements Parcelable {
         byte adultVal = in.readByte();
         adult = adultVal == 0x02 ? null : adultVal != 0x00;
         overview = in.readString();
-        releaseDate = in.readString();
+        releaseDate = (java.util.Date) in.readSerializable();
     }
 
     @Override
@@ -242,7 +249,7 @@ public class Result implements Parcelable {
             dest.writeByte((byte) (adult ? 0x01 : 0x00));
         }
         dest.writeString(overview);
-        dest.writeString(releaseDate);
+        dest.writeSerializable(releaseDate);
     }
 
     @SuppressWarnings("unused")

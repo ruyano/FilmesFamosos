@@ -6,5 +6,6 @@
 
     <color name="background">#5F4B8B</color>
     <color name="error">#FFFF</color>
+    <color name="text">#ffffff</color>
 
 </resources>

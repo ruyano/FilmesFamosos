@@ -1,5 +1,9 @@
 package br.com.udacity.ruyano.filmesfamosos.networking.clients;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import br.com.udacity.ruyano.filmesfamosos.model.Language;
 import br.com.udacity.ruyano.filmesfamosos.model.RequestResult;
 import br.com.udacity.ruyano.filmesfamosos.networking.RetrofitConfig;
 import br.com.udacity.ruyano.filmesfamosos.networking.services.IAPIService;
@@ -23,8 +27,26 @@ public class APIClient {
         return mInstance;
     }
 
-    public void getPopularMovies(final RetrofitConfig.OnRestResponseListener<RequestResult> listener) {
-        this.service.getPopularMovies().enqueue(new Callback<RequestResult>() {
+    public void getLanguages(final RetrofitConfig.OnRestResponseListener<List<Language>> listener) {
+        this.service.getLanguages().enqueue(new Callback<List<Language>>() {
+            @Override
+            public void onResponse(Call<List<Language>> call, Response<List<Language>> response) {
+                if (response.isSuccessful()) {
+                    listener.onRestSuccess(response.body());
+                } else {
+                    listener.onRestError(response.errorBody(), response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Language>> call, Throwable t) {
+                listener.onFailure(t.getMessage());
+            }
+        });
+    }
+
+    public void getPopularMovies(Integer page, final RetrofitConfig.OnRestResponseListener<RequestResult> listener) {
+        this.service.getPopularMovies(page).enqueue(new Callback<RequestResult>() {
             @Override
             public void onResponse(Call<RequestResult> call, Response<RequestResult> response) {
                 if (response.isSuccessful()) {
