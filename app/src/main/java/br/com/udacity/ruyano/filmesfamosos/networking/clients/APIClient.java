@@ -1,11 +1,14 @@
 package br.com.udacity.ruyano.filmesfamosos.networking.clients;
 
+import android.content.Context;
+
 import java.util.List;
 
 import br.com.udacity.ruyano.filmesfamosos.model.Language;
 import br.com.udacity.ruyano.filmesfamosos.model.RequestResult;
 import br.com.udacity.ruyano.filmesfamosos.networking.RetrofitConfig;
 import br.com.udacity.ruyano.filmesfamosos.networking.services.IAPIService;
+import br.com.udacity.ruyano.filmesfamosos.util.NetworkUtil;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -13,7 +16,7 @@ import retrofit2.Response;
 public class APIClient {
 
     private static APIClient mInstance;
-    private IAPIService service = ((IAPIService) RetrofitConfig.getInstance().getRetrofit().create(IAPIService.class));
+    private IAPIService service = RetrofitConfig.getInstance().getRetrofit().create(IAPIService.class);
 
     private APIClient() {
         mInstance = this;
@@ -21,12 +24,18 @@ public class APIClient {
 
     public static APIClient getInstance() {
         if (mInstance == null) {
-            APIClient aPIClient = new APIClient();
+            mInstance = new APIClient();
         }
         return mInstance;
     }
 
-    public void getLanguages(final RetrofitConfig.OnRestResponseListener<List<Language>> listener) {
+    public void getLanguages(Context context, final RetrofitConfig.OnRestResponseListener<List<Language>> listener) {
+
+        if (!NetworkUtil.isConected(context)) {
+            listener.noInternet();
+            return;
+        }
+
         this.service.getLanguages().enqueue(new Callback<List<Language>>() {
             @Override
             public void onResponse(Call<List<Language>> call, Response<List<Language>> response) {
@@ -44,7 +53,13 @@ public class APIClient {
         });
     }
 
-    public void getPopularMovies(Integer page, final RetrofitConfig.OnRestResponseListener<RequestResult> listener) {
+    public void getPopularMovies(Context context, Integer page, final RetrofitConfig.OnRestResponseListener<RequestResult> listener) {
+
+        if (!NetworkUtil.isConected(context)) {
+            listener.noInternet();
+            return;
+        }
+
         this.service.getPopularMovies(page).enqueue(new Callback<RequestResult>() {
             @Override
             public void onResponse(Call<RequestResult> call, Response<RequestResult> response) {
@@ -62,7 +77,13 @@ public class APIClient {
         });
     }
 
-    public void getTopRatedMovies(Integer page, final RetrofitConfig.OnRestResponseListener<RequestResult> listener) {
+    public void getTopRatedMovies(Context context, Integer page, final RetrofitConfig.OnRestResponseListener<RequestResult> listener) {
+
+        if (!NetworkUtil.isConected(context)) {
+            listener.noInternet();
+            return;
+        }
+
         this.service.getTopRatedMovies(page).enqueue(new Callback<RequestResult>() {
             @Override
             public void onResponse(Call<RequestResult> call, Response<RequestResult> response) {

@@ -16,11 +16,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 import br.com.udacity.ruyano.filmesfamosos.R;
 import br.com.udacity.ruyano.filmesfamosos.model.RequestResult;
@@ -29,7 +29,7 @@ import br.com.udacity.ruyano.filmesfamosos.networking.RetrofitConfig;
 import br.com.udacity.ruyano.filmesfamosos.networking.clients.APIClient;
 import br.com.udacity.ruyano.filmesfamosos.ui.adapters.MoviesAdapter;
 import br.com.udacity.ruyano.filmesfamosos.util.EndlessRecyclerViewScrollListener;
-import br.com.udacity.ruyano.filmesfamosos.util.NetworkUtil;
+import br.com.udacity.ruyano.filmesfamosos.util.GridRecyclerView;
 import br.com.udacity.ruyano.filmesfamosos.util.UsersEvaluationView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -38,7 +38,7 @@ import okhttp3.ResponseBody;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
 
     @BindView(R.id.rv_movies)
-    RecyclerView rvMovies;
+    GridRecyclerView rvMovies;
 
     @BindView(R.id.srl_swipe_to_refresh_layout)
     SwipeRefreshLayout srlSwipeToRefreshLayout;
@@ -64,11 +64,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        if (!NetworkUtil.isConected(this)) {
-            showNoInternetView();
+        init();
+        requestFirstPage();
+
+    }
+
+    private void changeScreenTitle() {
+        if (isRequestingPopular) {
+            Objects.requireNonNull(getSupportActionBar()).setTitle(getString(R.string.menu_popularity));
         } else {
-            init();
-            requestFirstPage();
+            getSupportActionBar().setTitle(getString(R.string.menu_avaliation));
         }
     }
 
@@ -105,13 +110,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .into(ivStatusImage);
     }
 
-    private void shoShameErrorView() {
+    private void showShameErrorView() {
         ivStatusImage.setVisibility(View.VISIBLE);
         tvStatusText.setVisibility(View.VISIBLE);
         tvStatusText.setText(R.string.shame_error);
         rvMovies.setVisibility(View.GONE);
         Glide.with(this)
-                .load(R.drawable.shame_error)
+                .load(R.drawable.error)
                 .into(ivStatusImage);
     }
 
@@ -167,6 +172,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void requestFirstPage() {
+        rvMovies.runLayoutAnimation();
+        changeScreenTitle();
         showLoading();
         movies.clear();
         moviesAdapter.notifyDataSetChanged();
@@ -180,7 +187,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onRestSuccess(RequestResult response) {
                 srlSwipeToRefreshLayout.setRefreshing(false);
-                for(Result movie : response.getResults()) {
+                for (Result movie : response.getResults()) {
                     movies.add(movie);
                     moviesAdapter.notifyItemChanged(movies.size());
                 }
@@ -190,21 +197,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onRestError(ResponseBody body, int code) {
                 srlSwipeToRefreshLayout.setRefreshing(false);
-                shoShameErrorView();
+                showShameErrorView();
             }
 
             @Override
             public void onFailure(String str) {
                 srlSwipeToRefreshLayout.setRefreshing(false);
-                shoShameErrorView();
+                showShameErrorView();
+            }
+
+            @Override
+            public void noInternet() {
+                srlSwipeToRefreshLayout.setRefreshing(false);
+                showNoInternetView();
             }
         };
 
 
         if (isRequestingPopular) {
-            APIClient.getInstance().getPopularMovies(page, serviceListener);
+            APIClient.getInstance().getPopularMovies(MainActivity.this, page, serviceListener);
         } else {
-            APIClient.getInstance().getTopRatedMovies(page, serviceListener);
+            APIClient.getInstance().getTopRatedMovies(MainActivity.this, page, serviceListener);
         }
 
     }

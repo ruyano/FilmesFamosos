@@ -1,11 +1,13 @@
 package br.com.udacity.ruyano.filmesfamosos.ui;
 
 import android.content.Intent;
+import android.media.Image;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.animation.LayoutAnimationController;
+import android.widget.ImageView;
 
-import java.util.ArrayList;
+import com.bumptech.glide.Glide;
+
 import java.util.List;
 import java.util.Locale;
 
@@ -14,34 +16,33 @@ import br.com.udacity.ruyano.filmesfamosos.model.Language;
 import br.com.udacity.ruyano.filmesfamosos.networking.RetrofitConfig;
 import br.com.udacity.ruyano.filmesfamosos.networking.clients.APIClient;
 import br.com.udacity.ruyano.filmesfamosos.util.Constants;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import okhttp3.ResponseBody;
 
 public class SplashActivity extends AppCompatActivity {
 
+    @BindView(R.id.iv_logo)
+    ImageView ivLogo;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_splash);
+        ButterKnife.bind(this);
+
+        Glide.with(this)
+                .load(R.drawable.loading)
+                .into(ivLogo);
 
         getLanguageList();
     }
 
     private void getLanguageList() {
-        APIClient.getInstance().getLanguages(new RetrofitConfig.OnRestResponseListener<List<Language>>() {
+        APIClient.getInstance().getLanguages(this, new RetrofitConfig.OnRestResponseListener<List<Language>>() {
             @Override
             public void onRestSuccess(List<Language> response) {
-                String deviceCountry = Locale.getDefault().getCountry();
-                String deviceLanguage = Locale.getDefault().getLanguage();
-
-                if(deviceCountry != null && deviceLanguage != null) {
-                    for (Language language : response) {
-                        if (language.getIso_639_1().equals(deviceLanguage)) {
-                            saveLanguageAndGoToMain(deviceLanguage + "-" + deviceCountry);
-                            return;
-                        }
-                    }
-                }
-
-                saveLanguageAndGoToMain(null);
+                validateLocalLanguage(response);
             }
 
             @Override
@@ -53,11 +54,33 @@ public class SplashActivity extends AppCompatActivity {
             public void onFailure(String str) {
                 saveLanguageAndGoToMain(null);
             }
+
+            @Override
+            public void noInternet() {
+                saveLanguageAndGoToMain(null);
+            }
         });
+
+    }
+
+    private void validateLocalLanguage(List<Language> languages) {
+        String deviceCountry = Locale.getDefault().getCountry();
+        String deviceLanguage = Locale.getDefault().getLanguage();
+
+        if (deviceCountry != null && deviceLanguage != null) {
+            for (Language language : languages) {
+                if (language.getIso_639_1().equals(deviceLanguage)) {
+                    saveLanguageAndGoToMain(deviceLanguage + "-" + deviceCountry);
+                    return;
+                }
+            }
+        }
+
+        saveLanguageAndGoToMain(null);
     }
 
     private void saveLanguageAndGoToMain(String language) {
-        if(language != null) {
+        if (language != null) {
             Constants.DEVICE_LANGUAGE = language;
             RetrofitConfig.getInstance().updateRetrofit();
         }

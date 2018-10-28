@@ -11,12 +11,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <android.support.v7.widget.RecyclerView
+        <br.com.udacity.ruyano.filmesfamosos.util.GridRecyclerView
             android:id="@+id/rv_movies"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="gone"
             tools:itemCount="5"
+            android:layoutAnimation="@anim/grid_layout_animation_from_bottom"
             tools:layoutManager="android.support.v7.widget.GridLayoutManager"
             tools:listitem="@layout/movie_grid_item"
             tools:orientation="vertical"
@@ -37,13 +38,13 @@
             android:id="@+id/iv_status_image"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:src="@drawable/loading" />
+            android:src="@drawable/loading"
+            android:contentDescription="@string/status_image_content_description" />
 
         <TextView
             android:id="@+id/tv_status_text"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/iv_status_image"
             android:gravity="center"
             android:text="@string/no_internet_message"
             android:textColor="@color/error" />

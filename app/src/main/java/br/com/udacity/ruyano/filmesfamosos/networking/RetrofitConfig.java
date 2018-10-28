@@ -76,6 +76,8 @@ public class RetrofitConfig {
 
         void onFailure(String str);
 
+        void noInternet();
+
     }
 
 }

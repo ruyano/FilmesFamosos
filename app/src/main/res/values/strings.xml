@@ -8,7 +8,14 @@
     <string name="no_internet_message">Ops. Parece que você está sem internet, verifique sua conexão e tente novamente!</string>
     <string name="shame_error">Ops. Estamos passando por dificuldades técnicas, por favor tente novamente mais tarde!</string>
 
-    <string name="menu_popularity">Ordem de popularidade</string>
-    <string name="menu_avaliation">Ordem de avaliação</string>
+    <string name="menu_popularity">Mais populares</string>
+    <string name="menu_avaliation">Melhor avaliados</string>
+
+    <string name="status_image_content_description">Imagem para ilustrar o status da operção.</string>
+    <string name="movie_backdrop_content_description">Imagem de fundo do filme</string>
+    <string name="movie_banner_content_description">Cartaz do filme</string>
+    <string name="circle_background_content_description">Fundo em circulo</string>
+    <string name="adults_only_content_description">Imagen indicativa que o filme é para maiores de 18 anos</string>
+    <string name="app_logo_content_description">Logotipo do app, gif de uma camera de cinema.</string>
 
 </resources>

@@ -13,12 +13,13 @@
         android:padding="5dp"
         android:scaleType="fitXY"
         android:transitionName="@string/activity_mixed_trans_banner"
-        tools:src="@color/colorPrimaryDark" />
+        tools:src="@color/colorPrimaryDark"
+        android:contentDescription="@string/movie_banner_content_description" />
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:layout_margin="10dp"
         android:orientation="horizontal">
 
@@ -26,21 +27,23 @@
             android:id="@+id/rl_adult_view"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginEnd="10dp"
             android:transitionName="@string/activity_mixed_trans_adult"
             android:visibility="gone">
 
             <ImageView
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:src="@drawable/circle_background" />
+                android:src="@drawable/circle_background"
+                android:contentDescription="@string/circle_background_content_description" />
 
             <ImageView
                 android:id="@+id/iv_adults_only"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_margin="5dp"
-                android:src="@drawable/ic_plus_18_movie" />
+                android:src="@drawable/ic_plus_18_movie"
+                android:contentDescription="@string/adults_only_content_description" />
 
         </RelativeLayout>
 

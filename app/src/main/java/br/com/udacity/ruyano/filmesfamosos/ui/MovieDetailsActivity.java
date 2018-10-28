@@ -10,6 +10,8 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.util.Objects;
+
 import br.com.udacity.ruyano.filmesfamosos.R;
 import br.com.udacity.ruyano.filmesfamosos.model.Result;
 import br.com.udacity.ruyano.filmesfamosos.util.GlideUtil;
@@ -20,7 +22,7 @@ import butterknife.ButterKnife;
 
 public class MovieDetailsActivity extends AppCompatActivity {
 
-    public static final String EXTRAS_MOVIE = "movie";
+    private static final String EXTRAS_MOVIE = "movie";
 
     @BindView(R.id.iv_movie_backdrop)
     ImageView ivMovieBackDrop;
@@ -57,7 +59,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_movie_details);
         ButterKnife.bind(this);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
         getExtras();
 
