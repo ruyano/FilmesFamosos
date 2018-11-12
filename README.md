@@ -13,4 +13,4 @@
 ## themoviedb API KEY
   - O projeto ustiliza a API do [themoviedb.org]( https://www.themoviedb.org/), por esse motivo é necessário a utilização de uma API KEY do mesmo, [Clique aqui](https://www.themoviedb.org/account/signup) para criar uma conta e pegar uma API_KEY
   
-  - Sua API KEY deve ser adicionada no arquivo Constants.java, substituindo a frase: "YOUR themoviedb.org API_KEY GOES HERE"
+  - Sua API KEY deve ser adicionada no arquivo gradle.properties, em uma nova variável chamada: THEMOVIEDB_API_KEY
