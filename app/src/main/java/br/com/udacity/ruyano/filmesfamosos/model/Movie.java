@@ -11,7 +11,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-public class Result implements Parcelable {
+public class Movie implements Parcelable {
 
     @SerializedName("vote_count")
     private Integer voteCount;
@@ -173,7 +173,7 @@ public class Result implements Parcelable {
     }
 
 
-    private Result(Parcel in) {
+    private Movie(Parcel in) {
         voteCount = in.readByte() == 0x00 ? null : in.readInt();
         id = in.readByte() == 0x00 ? null : in.readInt();
         byte videoVal = in.readByte();
@@ -254,15 +254,15 @@ public class Result implements Parcelable {
     }
 
     @SuppressWarnings("unused")
-    public static final Parcelable.Creator<Result> CREATOR = new Parcelable.Creator<Result>() {
+    public static final Parcelable.Creator<Movie> CREATOR = new Parcelable.Creator<Movie>() {
         @Override
-        public Result createFromParcel(Parcel in) {
-            return new Result(in);
+        public Movie createFromParcel(Parcel in) {
+            return new Movie(in);
         }
 
         @Override
-        public Result[] newArray(int size) {
-            return new Result[size];
+        public Movie[] newArray(int size) {
+            return new Movie[size];
         }
     };
 }

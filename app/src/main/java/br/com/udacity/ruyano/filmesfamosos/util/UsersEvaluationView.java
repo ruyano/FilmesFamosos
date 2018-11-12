@@ -15,8 +15,6 @@ import butterknife.ButterKnife;
 
 public class UsersEvaluationView extends RelativeLayout {
 
-    private Context context;
-
     @BindView(R.id.progress_bar)
     ProgressBar progressBar;
 
@@ -25,12 +23,10 @@ public class UsersEvaluationView extends RelativeLayout {
 
     public UsersEvaluationView(Context context) {
         super(context);
-        this.context = context;
     }
 
     public UsersEvaluationView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        this.context = context;
 
         init(context);
     }
@@ -69,20 +65,20 @@ public class UsersEvaluationView extends RelativeLayout {
 
     private void setProgressColorByScore(Double score) {
         if (score >= 7.5) {
-            changeProgressBarColors(context.getResources().getColor(R.color.progress_high_score),
-                    context.getResources().getColor(R.color.progress_high_score_background));
+            changeProgressBarColors(super.getContext().getResources().getColor(R.color.progress_high_score),
+                    super.getContext().getResources().getColor(R.color.progress_high_score_background));
         } else if (score >= 5) {
-            changeProgressBarColors(context.getResources().getColor(R.color.progress_good_score),
-                    context.getResources().getColor(R.color.progress_good_score_background));
+            changeProgressBarColors(super.getContext().getResources().getColor(R.color.progress_good_score),
+                    super.getContext().getResources().getColor(R.color.progress_good_score_background));
         } else if (score >= 2.5) {
-            changeProgressBarColors(context.getResources().getColor(R.color.progress_low_score),
-                    context.getResources().getColor(R.color.progress_low_score_background));
+            changeProgressBarColors(super.getContext().getResources().getColor(R.color.progress_low_score),
+                    super.getContext().getResources().getColor(R.color.progress_low_score_background));
         } else if (score != null) {
-            changeProgressBarColors(context.getResources().getColor(R.color.progress_lowest_score),
-                    context.getResources().getColor(R.color.progress_lowest_score_background));
+            changeProgressBarColors(super.getContext().getResources().getColor(R.color.progress_lowest_score),
+                    super.getContext().getResources().getColor(R.color.progress_lowest_score_background));
         } else {
-            changeProgressBarColors(context.getResources().getColor(R.color.progress_none_score),
-                    context.getResources().getColor(R.color.progress_none_score_background));
+            changeProgressBarColors(super.getContext().getResources().getColor(R.color.progress_none_score),
+                    super.getContext().getResources().getColor(R.color.progress_none_score_background));
         }
     }
 

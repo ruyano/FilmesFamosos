@@ -24,7 +24,7 @@ import java.util.Objects;
 
 import br.com.udacity.ruyano.filmesfamosos.R;
 import br.com.udacity.ruyano.filmesfamosos.model.RequestResult;
-import br.com.udacity.ruyano.filmesfamosos.model.Result;
+import br.com.udacity.ruyano.filmesfamosos.model.Movie;
 import br.com.udacity.ruyano.filmesfamosos.networking.RetrofitConfig;
 import br.com.udacity.ruyano.filmesfamosos.networking.clients.APIClient;
 import br.com.udacity.ruyano.filmesfamosos.ui.adapters.MoviesAdapter;
@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private EndlessRecyclerViewScrollListener scrollListener;
     private MoviesAdapter moviesAdapter;
-    private ArrayList<Result> movies = new ArrayList<>();
+    private ArrayList<Movie> movies = new ArrayList<>();
 
     private Boolean isRequestingPopular = true;
 
@@ -187,7 +187,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onRestSuccess(RequestResult response) {
                 srlSwipeToRefreshLayout.setRefreshing(false);
-                for (Result movie : response.getResults()) {
+                for (Movie movie : response.getResults()) {
                     movies.add(movie);
                     moviesAdapter.notifyItemChanged(movies.size());
                 }

@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 
 import java.io.IOException;
 
+import br.com.udacity.ruyano.filmesfamosos.BuildConfig;
 import br.com.udacity.ruyano.filmesfamosos.util.Constants;
 import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
@@ -33,7 +34,7 @@ public class RetrofitConfig {
                 HttpUrl originalHttpUrl = original.url();
 
                 HttpUrl url = originalHttpUrl.newBuilder()
-                        .addQueryParameter(Constants.API_KEY_QUERY, Constants.API_KEY)
+                        .addQueryParameter(Constants.API_KEY_QUERY, BuildConfig.THEMOVIEDB_API_KEY)
                         .addQueryParameter(Constants.DEVICE_LANGUAGE_QUERY, Constants.DEVICE_LANGUAGE)
                         .build();
 

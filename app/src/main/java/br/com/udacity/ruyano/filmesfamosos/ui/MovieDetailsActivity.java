@@ -13,7 +13,7 @@ import android.widget.TextView;
 import java.util.Objects;
 
 import br.com.udacity.ruyano.filmesfamosos.R;
-import br.com.udacity.ruyano.filmesfamosos.model.Result;
+import br.com.udacity.ruyano.filmesfamosos.model.Movie;
 import br.com.udacity.ruyano.filmesfamosos.util.GlideUtil;
 import br.com.udacity.ruyano.filmesfamosos.util.ImageQuality;
 import br.com.udacity.ruyano.filmesfamosos.util.UsersEvaluationView;
@@ -45,9 +45,9 @@ public class MovieDetailsActivity extends AppCompatActivity {
     @BindView(R.id.rl_adult_view)
     RelativeLayout rlAdultView;
 
-    private Result movie;
+    private Movie movie;
 
-    public static Intent getIntent(Context context, Result movie) {
+    public static Intent getIntent(Context context, Movie movie) {
         Intent intent = new Intent(context, MovieDetailsActivity.class);
         intent.putExtra(EXTRAS_MOVIE, movie);
         return intent;
@@ -71,7 +71,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
     }
 
     private void getExtras() {
-        if (getIntent().hasExtra(EXTRAS_MOVIE)) {
+        if (getIntent().getExtras() != null && getIntent().hasExtra(EXTRAS_MOVIE)) {
             movie = getIntent().getExtras().getParcelable(EXTRAS_MOVIE);
         }
     }

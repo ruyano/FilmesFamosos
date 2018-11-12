@@ -12,7 +12,7 @@ import android.widget.RelativeLayout;
 import java.util.ArrayList;
 
 import br.com.udacity.ruyano.filmesfamosos.R;
-import br.com.udacity.ruyano.filmesfamosos.model.Result;
+import br.com.udacity.ruyano.filmesfamosos.model.Movie;
 import br.com.udacity.ruyano.filmesfamosos.util.GlideUtil;
 import br.com.udacity.ruyano.filmesfamosos.util.ImageQuality;
 import br.com.udacity.ruyano.filmesfamosos.util.UsersEvaluationView;
@@ -22,10 +22,10 @@ import butterknife.ButterKnife;
 public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder> {
 
     private Context context;
-    private ArrayList<Result> movies;
+    private ArrayList<Movie> movies;
     private MoviesAdapterOnItemClickListener itemClickListener;
 
-    public MoviesAdapter(Context context, ArrayList<Result> movies, MoviesAdapterOnItemClickListener itemClickListener) {
+    public MoviesAdapter(Context context, ArrayList<Movie> movies, MoviesAdapterOnItemClickListener itemClickListener) {
         this.context = context;
         this.movies = movies;
         this.itemClickListener = itemClickListener;
@@ -64,7 +64,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder
             itemView.setOnClickListener(this);
         }
 
-        public void bind(Result movie) {
+        public void bind(Movie movie) {
             GlideUtil.loadImage(context,
                     movie.getPosterPath(),
                     ivMovieBanner,

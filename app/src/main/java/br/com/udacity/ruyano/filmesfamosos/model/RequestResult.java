@@ -17,7 +17,7 @@ public class RequestResult {
     private Integer totalPages;
 
     @SerializedName("results")
-    private ArrayList<Result> results = null;
+    private ArrayList<Movie> results = null;
 
     public Integer getPage() {
         return page;
@@ -43,11 +43,11 @@ public class RequestResult {
         this.totalPages = totalPages;
     }
 
-    public List<Result> getResults() {
+    public List<Movie> getResults() {
         return results;
     }
 
-    public void setResults(ArrayList<Result> results) {
+    public void setResults(ArrayList<Movie> results) {
         this.results = results;
     }
 
