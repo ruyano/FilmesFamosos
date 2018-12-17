@@ -19,16 +19,20 @@ public class MovieRepository extends BaseObservable {
         return movies;
     }
 
-    public void fetchList() {
-        APIClient.getInstance().getPopularMovies(1, new RetrofitConfig.OnRestResponseListener<RequestResult>() {
+    public void fetchList(final Integer page) {
+        APIClient.getInstance().getPopularMovies(page, new RetrofitConfig.OnRestResponseListener<RequestResult>() {
             @Override
             public void onRestSuccess(RequestResult response) {
-                List<Movie> currrent = new ArrayList<>();
-                if (movies != null && movies.getValue() != null){
-                    currrent.addAll(movies.getValue());
+                if (page > 1) {
+                    List<Movie> currrent = new ArrayList<>();
+                    if (movies != null && movies.getValue() != null) {
+                        currrent.addAll(movies.getValue());
+                    }
+                    currrent.addAll(response.getResults());
+                    movies.setValue(currrent);
+                } else {
+                    movies.setValue(response.getResults());
                 }
-                currrent.addAll(response.getResults());
-                movies.setValue(currrent);
             }
 
             @Override

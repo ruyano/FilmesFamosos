@@ -4,6 +4,7 @@ import android.view.View;
 
 import java.util.List;
 
+import androidx.databinding.ObservableBoolean;
 import androidx.databinding.ObservableInt;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -16,6 +17,7 @@ public class ViewModelTeste extends ViewModel {
     private MutableLiveData<Movie> movieSelected;
     public ObservableInt loading;
     public ObservableInt showEmpty;
+    public ObservableBoolean isLoading;
     private MovieRepository repository;
 
     void init() {
@@ -24,6 +26,7 @@ public class ViewModelTeste extends ViewModel {
         showEmpty = new ObservableInt(View.GONE);
         movieSelected = new MutableLiveData<>();
         repository = new MovieRepository();
+        isLoading = new ObservableBoolean(false);
     }
 
     public MvvmAdapter getAdapter() {
@@ -51,14 +54,19 @@ public class ViewModelTeste extends ViewModel {
         return null;
     }
 
-    void fetchList() {
-        repository.fetchList();
+    void fetchList(Integer page) {
+        repository.fetchList(page);
     }
 
     public void onItemClick(Integer index) {
         Movie selected = getMovieAt(index);
         if (selected != null)
             movieSelected.setValue(selected);
+    }
+
+    public void onRefresh() {
+        isLoading.set(true);
+        repository.fetchList(1);
     }
 
 }

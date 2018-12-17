@@ -10,22 +10,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import br.com.udacity.ruyano.filmesfamosos.R;
 import br.com.udacity.ruyano.filmesfamosos.databinding.ActivityMvvmBinding;
 import br.com.udacity.ruyano.filmesfamosos.model.Movie;
 import br.com.udacity.ruyano.filmesfamosos.ui.MovieDetailsActivity;
-import br.com.udacity.ruyano.filmesfamosos.util.GridRecyclerView;
-import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MvvmActivity extends AppCompatActivity implements  SwipeRefreshLayout.OnRefreshListener {
-
-    @BindView(R.id.rv_movies)
-    GridRecyclerView rvMovies;
-
-    @BindView(R.id.srl_swipe_to_refresh_layout)
-    SwipeRefreshLayout srlSwipeToRefreshLayout;
+public class MvvmActivity extends AppCompatActivity {
 
     private ViewModelTeste viewModel;
 
@@ -35,10 +26,6 @@ public class MvvmActivity extends AppCompatActivity implements  SwipeRefreshLayo
         setContentView(R.layout.activity_mvvm);
 
         ButterKnife.bind(this);
-
-        srlSwipeToRefreshLayout.setOnRefreshListener(this);
-        srlSwipeToRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
-
         setupBindings(savedInstanceState);
 
     }
@@ -56,22 +43,21 @@ public class MvvmActivity extends AppCompatActivity implements  SwipeRefreshLayo
 
     private void setupListUpdate() {
         viewModel.loading.set(View.VISIBLE);
-
         viewModel.getMovies().observe(this, new Observer<List<Movie>>() {
             @Override
             public void onChanged(List<Movie> movies) {
                 viewModel.loading.set(View.GONE);
+                viewModel.isLoading.set(false);
                 if (movies.size() == 0) {
                     viewModel.showEmpty.set(View.VISIBLE);
                 } else {
-                    srlSwipeToRefreshLayout.setRefreshing(false);
                     viewModel.showEmpty.set(View.GONE);
                     viewModel.setMoviesInAdapter(movies);
                 }
             }
         });
 
-        viewModel.fetchList();
+        viewModel.fetchList(1);
         setupListClick();
     }
 
@@ -83,11 +69,5 @@ public class MvvmActivity extends AppCompatActivity implements  SwipeRefreshLayo
                 startActivity(intent);
             }
         });
-    }
-
-    @Override
-    public void onRefresh() {
-        srlSwipeToRefreshLayout.setRefreshing(true);
-        viewModel.fetchList();
     }
 }

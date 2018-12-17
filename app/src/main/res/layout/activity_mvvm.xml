@@ -18,7 +18,9 @@
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:id="@+id/srl_swipe_to_refresh_layout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            app:refreshing="@{model.isLoading}"
+            app:onRefreshListener="@{() -> model.onRefresh()}">
 
             <br.com.udacity.ruyano.filmesfamosos.util.GridRecyclerView
                 android:id="@+id/rv_movies"
@@ -31,7 +33,7 @@
                 tools:listitem="@layout/movie_grid_item"
                 tools:orientation="vertical"
                 tools:scrollbars="vertical"
-                tools:spanCount="2" />
+                tools:spanCount="2"/>
 
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 

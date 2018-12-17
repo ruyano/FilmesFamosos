@@ -8,9 +8,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class CustomViewBindings {
 
-    private static final String QUALITY = "{quality}";
-    private static final String imageServerBaseUrl = "http://image.tmdb.org/t/p/" + QUALITY + "/";
-
     @BindingAdapter("setAdapter")
     public static void bindRecyclerViewAdapter(RecyclerView recyclerView, RecyclerView.Adapter<?> adapter) {
         recyclerView.setHasFixedSize(true);
