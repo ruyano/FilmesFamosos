@@ -28,6 +28,7 @@
         <activity
             android:name=".ui.MainActivity"
             android:screenOrientation="portrait" />
+        <activity android:name=".mvvm.MvvmActivity"></activity>
     </application>
 
 </manifest>

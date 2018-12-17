@@ -77,6 +77,26 @@ public class APIClient {
         });
     }
 
+    public void getPopularMovies(Integer page, final RetrofitConfig.OnRestResponseListener<RequestResult> listener) {
+
+        this.service.getPopularMovies(page).enqueue(new Callback<RequestResult>() {
+            @Override
+            public void onResponse(Call<RequestResult> call, Response<RequestResult> response) {
+                if (response.isSuccessful()) {
+                    listener.onRestSuccess(response.body());
+                } else {
+                    listener.onRestError(response.errorBody(), response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<RequestResult> call, Throwable t) {
+                listener.onFailure(t.getMessage());
+            }
+        });
+    }
+
+
     public void getTopRatedMovies(Context context, Integer page, final RetrofitConfig.OnRestResponseListener<RequestResult> listener) {
 
         if (!NetworkUtil.isConected(context)) {

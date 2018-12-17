@@ -172,6 +172,8 @@ public class Movie implements Parcelable {
         this.releaseDate = releaseDate;
     }
 
+    public Movie() {
+    }
 
     private Movie(Parcel in) {
         voteCount = in.readByte() == 0x00 ? null : in.readInt();

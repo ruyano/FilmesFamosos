@@ -1,8 +1,8 @@
 package br.com.udacity.ruyano.filmesfamosos.ui;
 
 import android.content.Intent;
-import android.media.Image;
-import android.support.v7.app.AppCompatActivity;
+
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ImageView;
 
@@ -13,6 +13,7 @@ import java.util.Locale;
 
 import br.com.udacity.ruyano.filmesfamosos.R;
 import br.com.udacity.ruyano.filmesfamosos.model.Language;
+import br.com.udacity.ruyano.filmesfamosos.mvvm.MvvmActivity;
 import br.com.udacity.ruyano.filmesfamosos.networking.RetrofitConfig;
 import br.com.udacity.ruyano.filmesfamosos.networking.clients.APIClient;
 import br.com.udacity.ruyano.filmesfamosos.util.Constants;
@@ -84,7 +85,7 @@ public class SplashActivity extends AppCompatActivity {
             Constants.DEVICE_LANGUAGE = language;
             RetrofitConfig.getInstance().updateRetrofit();
         }
-        Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+        Intent intent = new Intent(SplashActivity.this, MvvmActivity.class);
         startActivity(intent);
         finish();
     }
