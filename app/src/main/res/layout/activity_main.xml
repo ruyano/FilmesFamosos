@@ -6,7 +6,7 @@
     android:background="@color/background"
     tools:context=".ui.MainActivity">
 
-    <android.support.v4.widget.SwipeRefreshLayout
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/srl_swipe_to_refresh_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -18,13 +18,13 @@
             android:visibility="gone"
             tools:itemCount="5"
             android:layoutAnimation="@anim/grid_layout_animation_from_bottom"
-            tools:layoutManager="android.support.v7.widget.GridLayoutManager"
+            tools:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             tools:listitem="@layout/movie_grid_item"
             tools:orientation="vertical"
             tools:scrollbars="vertical"
             tools:spanCount="2" />
 
-    </android.support.v4.widget.SwipeRefreshLayout>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <LinearLayout
         android:id="@+id/ll_status_view"
