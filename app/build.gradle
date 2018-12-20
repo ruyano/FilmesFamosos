@@ -11,7 +11,6 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField("String", "THEMOVIEDB_API_KEY", THEMOVIEDB_API_KEY)
     }
-    dataBinding.enabled = true
     buildTypes {
         release {
             minifyEnabled false
@@ -27,7 +26,6 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.1.0-alpha3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0-alpha3'
-    implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
 
     // Recyclerview
     implementation 'androidx.recyclerview:recyclerview:1.0.0-alpha1'
