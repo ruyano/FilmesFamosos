@@ -8,23 +8,20 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
+import androidx.paging.PagedListAdapter;
+import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 import br.com.udacity.ruyano.filmesfamosos.BR;
+import br.com.udacity.ruyano.filmesfamosos.R;
 import br.com.udacity.ruyano.filmesfamosos.model.Movie;
 
-public class MvvmAdapter extends RecyclerView.Adapter<MvvmAdapter.ViewHolder> {
+public class MvvmAdapter extends PagedListAdapter<Movie, MvvmAdapter.ViewHolder> {
 
-    private int layoutId;
-    private List<Movie> movies;
     private ViewModelTeste viewModel;
 
-    public MvvmAdapter(int layoutId, ViewModelTeste viewModel) {
-        this.layoutId = layoutId;
+    public MvvmAdapter(ViewModelTeste viewModel) {
+        super(DIFF_CALLBACK);
         this.viewModel = viewModel;
-    }
-
-    private int getLayoutIdForPosition(int position) {
-        return layoutId;
     }
 
     @NonNull
@@ -36,23 +33,29 @@ public class MvvmAdapter extends RecyclerView.Adapter<MvvmAdapter.ViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MvvmAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        Movie movie = getItem(position);
         holder.bind(viewModel, position);
     }
 
     @Override
-    public int getItemCount() {
-        return movies == null ? 0 : movies.size();
-    }
-
-    @Override
     public int getItemViewType(int position) {
-        return getLayoutIdForPosition(position);
+        return R.layout.simple_list_item;
     }
 
-    public void setMovies(List<Movie> movies) {
-        this.movies = movies;
-    }
+    private static DiffUtil.ItemCallback<Movie> DIFF_CALLBACK =
+            new DiffUtil.ItemCallback<Movie>() {
+                @Override
+                public boolean areItemsTheSame(Movie oldItem, Movie newItem) {
+                    return oldItem.getId().equals(newItem.getId());
+                }
+
+                @Override
+                public boolean areContentsTheSame(Movie oldItem, Movie newItem) {
+                    return oldItem.equals(newItem);
+                }
+            };
+
 
     class ViewHolder extends RecyclerView.ViewHolder {
         final ViewDataBinding binding;

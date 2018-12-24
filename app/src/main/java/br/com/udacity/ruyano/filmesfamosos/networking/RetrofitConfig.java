@@ -6,6 +6,7 @@ import com.google.gson.GsonBuilder;
 import java.io.IOException;
 
 import br.com.udacity.ruyano.filmesfamosos.BuildConfig;
+import br.com.udacity.ruyano.filmesfamosos.networking.services.IAPIService;
 import br.com.udacity.ruyano.filmesfamosos.util.Constants;
 import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
@@ -79,6 +80,10 @@ public class RetrofitConfig {
 
         void noInternet();
 
+    }
+
+    public IAPIService getApi() {
+        return retrofit.create(IAPIService.class);
     }
 
 }

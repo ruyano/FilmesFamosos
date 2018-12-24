@@ -6,8 +6,12 @@ import java.util.List;
 
 import androidx.databinding.ObservableBoolean;
 import androidx.databinding.ObservableInt;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
+import androidx.paging.LivePagedListBuilder;
+import androidx.paging.PageKeyedDataSource;
+import androidx.paging.PagedList;
 import br.com.udacity.ruyano.filmesfamosos.R;
 import br.com.udacity.ruyano.filmesfamosos.model.Movie;
 
@@ -18,28 +22,47 @@ public class ViewModelTeste extends ViewModel {
     public ObservableInt loading;
     public ObservableInt showEmpty;
     public ObservableBoolean isLoading;
-    private MovieRepository repository;
+
+    //creating livedata for PagedList  and PagedKeyedDataSource
+    LiveData<PagedList<Movie>> moviesPagedList;
+    private LiveData<PageKeyedDataSource<Integer, Movie>> liveDataSource;
+
+    private MoviesDataSourceFactory moviesDataSourceFactory;
 
     void init() {
-        adapter = new MvvmAdapter(R.layout.simple_list_item, this);
+        adapter = new MvvmAdapter(this);
         loading = new ObservableInt(View.GONE);
         showEmpty = new ObservableInt(View.GONE);
         movieSelected = new MutableLiveData<>();
-        repository = new MovieRepository();
         isLoading = new ObservableBoolean(false);
+
+    }
+
+    //constructor
+    public ViewModelTeste() {
+        //getting our data source factory
+        moviesDataSourceFactory = new MoviesDataSourceFactory();
+
+        //getting the live data source from data source factory
+        liveDataSource = moviesDataSourceFactory.getLiveDataSource();
+
+        //Getting PagedList config
+        PagedList.Config pagedListConfig =
+                (new PagedList.Config.Builder())
+                        .setEnablePlaceholders(false)
+                        .setPageSize(20).build();
+
+        //Building the paged list
+
+        moviesPagedList = (new LivePagedListBuilder(moviesDataSourceFactory, pagedListConfig)).build();
     }
 
     public MvvmAdapter getAdapter() {
         return adapter;
     }
 
-    public void setMoviesInAdapter(List<Movie> movies) {
-        this.adapter.setMovies(movies);
-        this.adapter.notifyDataSetChanged();
-    }
-
-    public MutableLiveData<List<Movie>> getMovies() {
-        return repository.getMovies();
+    public void setMoviesInAdapter(PagedList<Movie> movies) {
+        adapter.submitList(movies);
     }
 
     public MutableLiveData<Movie> getMovieSelected() {
@@ -47,15 +70,11 @@ public class ViewModelTeste extends ViewModel {
     }
 
     public Movie getMovieAt(Integer index) {
-        if (repository.getMovies().getValue() != null
-                && repository.getMovies().getValue().size() > index) {
-            return repository.getMovies().getValue().get(index);
+        if (moviesPagedList.getValue() != null
+                && moviesPagedList.getValue().size() > index) {
+            return moviesPagedList.getValue().get(index);
         }
         return null;
-    }
-
-    void fetchList(Integer page) {
-        repository.fetchList(page);
     }
 
     public void onItemClick(Integer index) {
@@ -66,7 +85,7 @@ public class ViewModelTeste extends ViewModel {
 
     public void onRefresh() {
         isLoading.set(true);
-        repository.fetchList(1);
+        moviesDataSourceFactory.invalidateDataSource();
     }
 
 }

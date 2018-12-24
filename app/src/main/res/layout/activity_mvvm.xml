@@ -13,6 +13,7 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/background"
         tools:context=".DogBreedsActivity">
 
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -37,14 +38,14 @@
 
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-        <androidx.core.widget.ContentLoadingProgressBar
-            style="?android:attr/progressBarStyleLarge"
-            android:id="@+id/spinnerLoading"
-            android:indeterminate="true"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:visibility="@{model.loading}"
-            android:layout_gravity="center"/>
+        <ImageView
+            android:id="@+id/iv_status_image"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/loading"
+            android:contentDescription="@string/status_image_content_description"
+            android:layout_gravity="center"
+            android:visibility="@{model.loading}" />
 
         <TextView
             android:layout_width="wrap_content"

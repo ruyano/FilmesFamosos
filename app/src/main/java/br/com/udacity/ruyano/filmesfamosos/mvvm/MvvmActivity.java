@@ -4,12 +4,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-import java.util.List;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.paging.PagedList;
 import br.com.udacity.ruyano.filmesfamosos.R;
 import br.com.udacity.ruyano.filmesfamosos.databinding.ActivityMvvmBinding;
 import br.com.udacity.ruyano.filmesfamosos.model.Movie;
@@ -25,7 +24,6 @@ public class MvvmActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mvvm);
 
-        ButterKnife.bind(this);
         setupBindings(savedInstanceState);
 
     }
@@ -43,9 +41,10 @@ public class MvvmActivity extends AppCompatActivity {
 
     private void setupListUpdate() {
         viewModel.loading.set(View.VISIBLE);
-        viewModel.getMovies().observe(this, new Observer<List<Movie>>() {
+
+        viewModel.moviesPagedList.observe(this, new Observer<PagedList<Movie>>() {
             @Override
-            public void onChanged(List<Movie> movies) {
+            public void onChanged(PagedList<Movie> movies) {
                 viewModel.loading.set(View.GONE);
                 viewModel.isLoading.set(false);
                 if (movies.size() == 0) {
@@ -57,7 +56,6 @@ public class MvvmActivity extends AppCompatActivity {
             }
         });
 
-        viewModel.fetchList(1);
         setupListClick();
     }
 

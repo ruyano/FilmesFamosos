@@ -69,6 +69,7 @@
                 android:id="@+id/uev_users_evaluation_view"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
+                app:userEvaluation="@{viewModel.getMovieAt(position).voteAverage}"
                 android:transitionName="@string/activity_mixed_trans_evaluation" />
 
         </LinearLayout>

@@ -64,7 +64,10 @@ public class UsersEvaluationView extends RelativeLayout {
     }
 
     private void setProgressColorByScore(Double score) {
-        if (score >= 7.5) {
+        if (score == null) {
+            changeProgressBarColors(super.getContext().getResources().getColor(R.color.progress_none_score),
+                    super.getContext().getResources().getColor(R.color.progress_none_score_background));
+        } else if (score >= 7.5) {
             changeProgressBarColors(super.getContext().getResources().getColor(R.color.progress_high_score),
                     super.getContext().getResources().getColor(R.color.progress_high_score_background));
         } else if (score >= 5) {
@@ -73,12 +76,9 @@ public class UsersEvaluationView extends RelativeLayout {
         } else if (score >= 2.5) {
             changeProgressBarColors(super.getContext().getResources().getColor(R.color.progress_low_score),
                     super.getContext().getResources().getColor(R.color.progress_low_score_background));
-        } else if (score != null) {
+        } else {
             changeProgressBarColors(super.getContext().getResources().getColor(R.color.progress_lowest_score),
                     super.getContext().getResources().getColor(R.color.progress_lowest_score_background));
-        } else {
-            changeProgressBarColors(super.getContext().getResources().getColor(R.color.progress_none_score),
-                    super.getContext().getResources().getColor(R.color.progress_none_score_background));
         }
     }
 
