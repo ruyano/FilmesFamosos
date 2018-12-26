@@ -6,6 +6,7 @@ import br.com.udacity.ruyano.filmesfamosos.model.Language;
 import br.com.udacity.ruyano.filmesfamosos.model.RequestResult;
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface IAPIService {
@@ -14,12 +15,8 @@ public interface IAPIService {
     @GET("configuration/languages")
     Call<List<Language>> getLanguages();
 
-    // movie
-    @GET("movie/popular")
-    Call<RequestResult> getPopularMovies(@Query("page") Integer page);
-
-    @GET("movie/top_rated")
-    Call<RequestResult> getTopRatedMovies(@Query("page") Integer page);
+    @GET("movie/{sub_list}")
+    Call<RequestResult> getMovies(@Path("sub_list") String subList, @Query("page") Integer page);
 
 
 }

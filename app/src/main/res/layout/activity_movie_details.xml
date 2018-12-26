@@ -1,117 +1,132 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/background"
-    android:orientation="vertical"
-    tools:context=".ui.MovieDetailsActivity">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <LinearLayout
+    <data>
+
+        <variable
+            name="model"
+            type="br.com.udacity.ruyano.filmesfamosos.ui.movie.detail.MovieDetailsViewModel" />
+    </data>
+
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <ImageView
-            android:id="@+id/iv_movie_backdrop"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:adjustViewBounds="true"
-            android:scaleType="fitXY"
-            tools:src="@color/colorPrimaryDark"
-            android:contentDescription="@string/movie_backdrop_content_description" />
+        android:layout_height="match_parent"
+        android:background="@color/background"
+        android:orientation="vertical"
+        tools:context=".ui.movie.detail.MovieDetailsActivity">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
             <ImageView
-                android:id="@+id/iv_movie_banner"
-                android:layout_width="100dp"
-                android:layout_height="150dp"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
+                android:id="@+id/iv_movie_backdrop"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
                 android:adjustViewBounds="true"
                 android:scaleType="fitXY"
-                android:transitionName="@string/activity_mixed_trans_banner"
-                tools:src="@color/colorAccent"
-                android:contentDescription="@string/movie_banner_content_description" />
+                app:imageUrlOriginal="@{model.movie.backdropPath}"
+                tools:src="@color/colorPrimaryDark"
+                android:contentDescription="@string/movie_backdrop_content_description" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/tv_movie_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Movie name"
-                    android:textColor="@color/text"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/tv_release_date"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="dd/MM/yyyy"
-                    android:textColor="@color/text"
-                    android:textSize="14sp" />
+                <ImageView
+                    android:id="@+id/iv_movie_banner"
+                    android:layout_width="100dp"
+                    android:layout_height="150dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitXY"
+                    android:transitionName="@string/activity_mixed_trans_banner"
+                    app:imageUrlMedium="@{model.movie.posterPath}"
+                    tools:src="@color/colorAccent"
+                    android:contentDescription="@string/movie_banner_content_description" />
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:orientation="horizontal">
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
 
-                    <br.com.udacity.ruyano.filmesfamosos.util.UsersEvaluationView
-                        android:id="@+id/uev_users_evaluation_view"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:layout_marginEnd="10dp"
-                        android:transitionName="@string/activity_mixed_trans_evaluation" />
+                    <TextView
+                        android:id="@+id/tv_movie_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/text"
+                        android:text="@{model.movie.title}"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
 
-                    <RelativeLayout
-                        android:id="@+id/rl_adult_view"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:visibility="gone"
-                        android:transitionName="@string/activity_mixed_trans_adult">
+                    <TextView
+                        android:id="@+id/tv_release_date"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/text"
+                        android:text="@{model.movie.getReleaseDateString()}"
+                        android:textSize="14sp" />
 
-                        <ImageView
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:orientation="horizontal">
+
+                        <br.com.udacity.ruyano.filmesfamosos.util.UsersEvaluationView
+                            android:id="@+id/uev_users_evaluation_view"
                             android:layout_width="40dp"
                             android:layout_height="40dp"
-                            android:src="@drawable/circle_background"
-                            android:contentDescription="@string/circle_background_content_description" />
+                            android:layout_marginEnd="10dp"
+                            app:userEvaluation="@{model.movie.voteAverage}"
+                            android:transitionName="@string/activity_mixed_trans_evaluation" />
 
-                        <ImageView
-                            android:id="@+id/iv_adults_only"
+                        <RelativeLayout
+                            android:id="@+id/rl_adult_view"
                             android:layout_width="40dp"
                             android:layout_height="40dp"
-                            android:layout_margin="5dp"
-                            android:src="@drawable/ic_plus_18_movie"
-                            android:contentDescription="@string/adults_only_content_description" />
+                            app:booleanVisibility="@{model.movie.adult}"
+                            android:transitionName="@string/activity_mixed_trans_adult">
 
-                    </RelativeLayout>
+                            <ImageView
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:src="@drawable/circle_background"
+                                android:contentDescription="@string/circle_background_content_description" />
+
+                            <ImageView
+                                android:id="@+id/iv_adults_only"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:layout_margin="5dp"
+                                android:src="@drawable/ic_plus_18_movie"
+                                android:contentDescription="@string/adults_only_content_description" />
+
+                        </RelativeLayout>
+
+                    </LinearLayout>
 
                 </LinearLayout>
 
             </LinearLayout>
 
+            <TextView
+                android:id="@+id/tv_overview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:textColor="@color/text"
+                android:text="@{model.movie.overview}"
+                android:textSize="14sp" />
+
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/tv_overview"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:text="overview"
-            android:textColor="@color/text"
-            android:textSize="14sp" />
+    </ScrollView>
 
-    </LinearLayout>
-
-</ScrollView>
+</layout>

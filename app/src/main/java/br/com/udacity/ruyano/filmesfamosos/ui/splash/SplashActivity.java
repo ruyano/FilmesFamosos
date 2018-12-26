@@ -1,8 +1,6 @@
-package br.com.udacity.ruyano.filmesfamosos.ui;
+package br.com.udacity.ruyano.filmesfamosos.ui.splash;
 
 import android.content.Intent;
-
-import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ImageView;
 
@@ -11,11 +9,12 @@ import com.bumptech.glide.Glide;
 import java.util.List;
 import java.util.Locale;
 
+import androidx.appcompat.app.AppCompatActivity;
 import br.com.udacity.ruyano.filmesfamosos.R;
 import br.com.udacity.ruyano.filmesfamosos.model.Language;
-import br.com.udacity.ruyano.filmesfamosos.mvvm.MvvmActivity;
 import br.com.udacity.ruyano.filmesfamosos.networking.RetrofitConfig;
 import br.com.udacity.ruyano.filmesfamosos.networking.clients.APIClient;
+import br.com.udacity.ruyano.filmesfamosos.ui.main.MainActivity;
 import br.com.udacity.ruyano.filmesfamosos.util.Constants;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -85,7 +84,7 @@ public class SplashActivity extends AppCompatActivity {
             Constants.DEVICE_LANGUAGE = language;
             RetrofitConfig.getInstance().updateRetrofit();
         }
-        Intent intent = new Intent(SplashActivity.this, MvvmActivity.class);
+        Intent intent = new Intent(SplashActivity.this, MainActivity.class);
         startActivity(intent);
         finish();
     }

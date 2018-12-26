@@ -1,54 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/background"
-    tools:context=".ui.MainActivity">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/srl_swipe_to_refresh_layout"
+    <data>
+
+        <variable
+            name="model"
+            type="br.com.udacity.ruyano.filmesfamosos.ui.main.MoviesListViewModel" />
+    </data>
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/background">
 
-        <br.com.udacity.ruyano.filmesfamosos.util.GridRecyclerView
-            android:id="@+id/rv_movies"
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/srl_swipe_to_refresh_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="gone"
-            tools:itemCount="5"
-            android:layoutAnimation="@anim/grid_layout_animation_from_bottom"
-            tools:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-            tools:listitem="@layout/movie_grid_item"
-            tools:orientation="vertical"
-            tools:scrollbars="vertical"
-            tools:spanCount="2" />
+            app:onRefreshListener="@{() -> model.onRefresh()}"
+            app:refreshing="@{model.isLoading}" >
 
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="@{model.recyclerViewVisibility}"
+                app:setAdapter="@{model.getAdapter()}" />
 
-    <LinearLayout
-        android:id="@+id/ll_status_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:gravity="center"
-        android:orientation="vertical">
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-        <ImageView
-            android:id="@+id/iv_status_image"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:src="@drawable/loading"
-            android:contentDescription="@string/status_image_content_description" />
-
-        <TextView
-            android:id="@+id/tv_status_text"
-            android:layout_width="300dp"
+        <LinearLayout
+            android:id="@+id/ll_status_view"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
             android:gravity="center"
-            android:text="@string/no_internet_message"
-            android:textColor="@color/error" />
+            android:orientation="vertical">
 
-    </LinearLayout>
+            <ImageView
+                android:id="@+id/iv_status_image"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:src="@drawable/loading"
+                android:visibility="@{model.statusImageVisibility}"
+                app:loadGif="@{model.statusImageResourceId}"
+                android:contentDescription="@string/status_image_content_description" />
 
-</RelativeLayout>
+            <TextView
+                android:id="@+id/tv_status_text"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:visibility="@{model.statusTextVisibility}"
+                app:textResourceId="@{model.statusTextResourceId}"
+                android:textColor="@color/error" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+</layout>

@@ -30,7 +30,7 @@ public class GlideUtil {
     public static void loadImage(ImageView imageView, String imageUrl, ImageQuality quality) {
         if (imageUrl != null) {
 
-            imageUrl = imageServerBaseUrl.replace(QUALITY, ImageQuality.LOW.getValue()) + imageUrl;
+            imageUrl = imageServerBaseUrl.replace(QUALITY, quality.getValue()) + imageUrl;
 
             // If we don't do this, you'll see the old image appear briefly
             // before it's replaced with the current image

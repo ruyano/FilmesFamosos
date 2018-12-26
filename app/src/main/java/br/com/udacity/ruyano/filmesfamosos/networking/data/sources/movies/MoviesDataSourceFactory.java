@@ -1,4 +1,4 @@
-package br.com.udacity.ruyano.filmesfamosos.mvvm;
+package br.com.udacity.ruyano.filmesfamosos.networking.data.sources.movies;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.paging.DataSource;
@@ -12,11 +12,13 @@ public class MoviesDataSourceFactory extends DataSource.Factory {
 
     private MoviesDataSource dataSource;
 
+    private MoviesDataSource.MoviesTypeEnum moviesType = MoviesDataSource.MoviesTypeEnum.POPULAR;
+
     @Override
     public DataSource<Integer, Movie> create() {
 
         //getting our data source object
-        dataSource = new MoviesDataSource();
+        dataSource = new MoviesDataSource(moviesType);
 
         //posting the datasource to get the values
         liveDataSource.postValue(dataSource);
@@ -24,6 +26,15 @@ public class MoviesDataSourceFactory extends DataSource.Factory {
         //returning the datasource
         return dataSource;
 
+    }
+
+    public void setMoviesType(MoviesDataSource.MoviesTypeEnum moviesType) {
+        this.moviesType = moviesType;
+        liveDataSource.postValue(dataSource);
+    }
+
+    public MoviesDataSource.MoviesTypeEnum getMoviesType() {
+        return moviesType;
     }
 
     //getter for liveDataSource

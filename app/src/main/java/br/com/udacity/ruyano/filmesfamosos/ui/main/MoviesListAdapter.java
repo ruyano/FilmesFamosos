@@ -1,9 +1,7 @@
-package br.com.udacity.ruyano.filmesfamosos.mvvm;
+package br.com.udacity.ruyano.filmesfamosos.ui.main;
 
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
-
-import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
@@ -15,18 +13,18 @@ import br.com.udacity.ruyano.filmesfamosos.BR;
 import br.com.udacity.ruyano.filmesfamosos.R;
 import br.com.udacity.ruyano.filmesfamosos.model.Movie;
 
-public class MvvmAdapter extends PagedListAdapter<Movie, MvvmAdapter.ViewHolder> {
+public class MoviesListAdapter extends PagedListAdapter<Movie, MoviesListAdapter.ViewHolder> {
 
-    private ViewModelTeste viewModel;
+    private MoviesListViewModel viewModel;
 
-    public MvvmAdapter(ViewModelTeste viewModel) {
+    public MoviesListAdapter(MoviesListViewModel viewModel) {
         super(DIFF_CALLBACK);
         this.viewModel = viewModel;
     }
 
     @NonNull
     @Override
-    public MvvmAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public MoviesListAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         ViewDataBinding binding = DataBindingUtil.inflate(layoutInflater, viewType, parent, false);
         return new ViewHolder(binding);
@@ -34,13 +32,14 @@ public class MvvmAdapter extends PagedListAdapter<Movie, MvvmAdapter.ViewHolder>
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Movie movie = getItem(position);
+        // Needed so the pagedListAdapter can call for other pages...
+        getItem(position);
         holder.bind(viewModel, position);
     }
 
     @Override
     public int getItemViewType(int position) {
-        return R.layout.simple_list_item;
+        return R.layout.movie_grid_item;
     }
 
     private static DiffUtil.ItemCallback<Movie> DIFF_CALLBACK =
@@ -65,7 +64,7 @@ public class MvvmAdapter extends PagedListAdapter<Movie, MvvmAdapter.ViewHolder>
             this.binding = binding;
         }
 
-        void bind(ViewModelTeste viewModel, Integer position) {
+        void bind(MoviesListViewModel viewModel, Integer position) {
             binding.setVariable(BR.viewModel, viewModel);
             binding.setVariable(BR.position, position);
             binding.executePendingBindings();
