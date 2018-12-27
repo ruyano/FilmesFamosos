@@ -18,4 +18,6 @@
     <string name="adults_only_content_description">Imagen indicativa que o filme é para maiores de 18 anos</string>
     <string name="app_logo_content_description">Logotipo do app, gif de uma camera de cinema.</string>
 
+    <string name="youtube_url">https://www.youtube.com/watch?v=%1$s</string>
+
 </resources>

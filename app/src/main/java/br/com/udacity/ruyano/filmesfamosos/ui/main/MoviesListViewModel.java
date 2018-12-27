@@ -2,7 +2,6 @@ package br.com.udacity.ruyano.filmesfamosos.ui.main;
 
 import android.view.View;
 
-import androidx.annotation.Nullable;
 import androidx.databinding.ObservableBoolean;
 import androidx.databinding.ObservableInt;
 import androidx.lifecycle.LiveData;
@@ -11,7 +10,6 @@ import androidx.lifecycle.ViewModel;
 import androidx.paging.LivePagedListBuilder;
 import androidx.paging.PageKeyedDataSource;
 import androidx.paging.PagedList;
-import androidx.recyclerview.widget.RecyclerView;
 import br.com.udacity.ruyano.filmesfamosos.R;
 import br.com.udacity.ruyano.filmesfamosos.model.Movie;
 import br.com.udacity.ruyano.filmesfamosos.networking.data.sources.movies.MoviesDataSource;
@@ -21,8 +19,6 @@ public class MoviesListViewModel extends ViewModel {
 
     private MoviesListAdapter adapter;
     private MutableLiveData<Movie> movieSelected;
-    public ObservableInt loading;
-    public ObservableInt showEmpty;
     public ObservableBoolean isLoading;
 
     // recyclerView
@@ -46,8 +42,6 @@ public class MoviesListViewModel extends ViewModel {
 
     void init() {
         adapter = new MoviesListAdapter(this);
-        loading = new ObservableInt(View.GONE);
-        showEmpty = new ObservableInt(View.GONE);
         recyclerViewVisibility = new ObservableInt(View.GONE);
         movieSelected = new MutableLiveData<>();
         isLoading = new ObservableBoolean(false);

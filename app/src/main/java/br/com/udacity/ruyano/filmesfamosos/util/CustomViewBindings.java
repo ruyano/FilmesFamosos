@@ -9,13 +9,14 @@ import com.bumptech.glide.Glide;
 import androidx.databinding.BindingAdapter;
 import androidx.paging.PagedListAdapter;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import br.com.udacity.ruyano.filmesfamosos.R;
 
 public class CustomViewBindings {
 
-    @BindingAdapter("setAdapter")
-    public static void bindRecyclerViewAdapter(RecyclerView recyclerView, PagedListAdapter<?,?> adapter) {
+    @BindingAdapter("setGridAdapter")
+    public static void bindGridRecyclerViewAdapter(RecyclerView recyclerView, PagedListAdapter<?,?> adapter) {
         recyclerView.setHasFixedSize(true);
         final GridLayoutManager gridLayoutManager = new GridLayoutManager(recyclerView.getContext(), 2);
         recyclerView.setLayoutManager(gridLayoutManager);
@@ -29,6 +30,15 @@ public class CustomViewBindings {
                 }
             }
         });
+
+    }
+
+    @BindingAdapter("setLinearAdapter")
+    public static void bindLinearRecyclerViewAdapter(RecyclerView recyclerView, RecyclerView.Adapter adapter) {
+        recyclerView.setHasFixedSize(true);
+        final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(recyclerView.getContext());
+        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.setAdapter(adapter);
 
     }
 

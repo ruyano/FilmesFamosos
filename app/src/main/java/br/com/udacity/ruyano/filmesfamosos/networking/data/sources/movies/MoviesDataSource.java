@@ -5,7 +5,7 @@ import java.io.IOException;
 import androidx.annotation.NonNull;
 import androidx.paging.PageKeyedDataSource;
 import br.com.udacity.ruyano.filmesfamosos.model.Movie;
-import br.com.udacity.ruyano.filmesfamosos.model.RequestResult;
+import br.com.udacity.ruyano.filmesfamosos.model.MovieRequestResult;
 import br.com.udacity.ruyano.filmesfamosos.networking.RetrofitConfig;
 import retrofit2.Response;
 
@@ -23,7 +23,7 @@ public class MoviesDataSource extends PageKeyedDataSource<Integer, Movie> {
     @Override
     public void loadInitial(@NonNull LoadInitialParams<Integer> params, @NonNull LoadInitialCallback<Integer, Movie> callback) {
         try {
-            Response<RequestResult> response = RetrofitConfig.getInstance().getApi().getMovies(moviesType.getValue(), FIRST_PAGE).execute();
+            Response<MovieRequestResult> response = RetrofitConfig.getInstance().getApi().getMovies(moviesType.getValue(), FIRST_PAGE).execute();
             callback.onResult(response.body().getResults(), null, FIRST_PAGE + 1);
         } catch (IOException e) {
             e.printStackTrace();
@@ -33,7 +33,7 @@ public class MoviesDataSource extends PageKeyedDataSource<Integer, Movie> {
     @Override
     public void loadBefore(@NonNull final LoadParams<Integer> params, @NonNull final LoadCallback<Integer, Movie> callback) {
         try {
-            Response<RequestResult> response = RetrofitConfig.getInstance().getApi().getMovies(moviesType.getValue(), params.key).execute();
+            Response<MovieRequestResult> response = RetrofitConfig.getInstance().getApi().getMovies(moviesType.getValue(), params.key).execute();
             //if the current page is greater than one
             //we are decrementing the page number
             //else there is no previous page
@@ -52,7 +52,7 @@ public class MoviesDataSource extends PageKeyedDataSource<Integer, Movie> {
     @Override
     public void loadAfter(@NonNull final LoadParams<Integer> params, @NonNull final LoadCallback<Integer, Movie> callback) {
         try {
-            Response<RequestResult> response = RetrofitConfig.getInstance().getApi().getMovies(moviesType.getValue(), params.key).execute();
+            Response<MovieRequestResult> response = RetrofitConfig.getInstance().getApi().getMovies(moviesType.getValue(), params.key).execute();
             if (response.body() != null) {
                 //if the response has next page
                 //incrementing the next page number

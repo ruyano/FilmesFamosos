@@ -1,7 +1,5 @@
 package br.com.udacity.ruyano.filmesfamosos.util;
 
-import br.com.udacity.ruyano.filmesfamosos.BuildConfig;
-
 public class Constants {
 
     public static final String THE_MOVIE_DB_BASE_URL = "https://api.themoviedb.org/3/";
