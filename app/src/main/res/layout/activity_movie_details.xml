@@ -10,42 +10,26 @@
             type="br.com.udacity.ruyano.filmesfamosos.ui.movie.detail.MovieDetailsViewModel" />
     </data>
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/background"
-        android:orientation="vertical"
-        tools:context=".ui.movie.detail.MovieDetailsActivity">
+        android:overScrollMode="never">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <RelativeLayout
+            <ImageView
+                android:id="@+id/iv_movie_backdrop"
                 android:layout_width="match_parent"
-                android:layout_height="200dp">
-
-                <ImageView
-                    android:id="@+id/iv_movie_backdrop"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:adjustViewBounds="true"
-                    android:scaleType="fitXY"
-                    tools:src="@color/colorAccent"
-                    app:imageUrlOriginal="@{model.movie.backdropPath}"
-                    android:contentDescription="@string/movie_backdrop_content_description" />
-
-                <ImageView
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:layout_centerInParent="true"
-                    android:visibility="@{model.showVideoIcone}"
-                    tools:src="@color/background" />
-
-            </RelativeLayout>
-
-
+                android:layout_height="200dp"
+                android:adjustViewBounds="true"
+                android:scaleType="fitXY"
+                tools:src="@color/colorAccent"
+                app:imageUrlOriginal="@{model.movie.backdropPath}"
+                android:contentDescription="@string/movie_backdrop_content_description" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -89,8 +73,9 @@
                         android:textSize="14sp" />
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
                         android:layout_margin="10dp"
                         android:orientation="horizontal">
 
@@ -106,6 +91,7 @@
                             android:id="@+id/rl_adult_view"
                             android:layout_width="40dp"
                             android:layout_height="40dp"
+                            android:layout_marginEnd="10dp"
                             app:booleanVisibility="@{model.movie.adult}"
                             android:transitionName="@string/activity_mixed_trans_adult">
 
@@ -125,6 +111,17 @@
 
                         </RelativeLayout>
 
+                        <ImageView
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_marginEnd="10dp"
+                            android:src="@drawable/youtube"/>
+
+                        <ImageView
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:src="@drawable/review"/>
+
                     </LinearLayout>
 
                 </LinearLayout>
@@ -143,10 +140,18 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:setLinearAdapter="@{model.getAdapter()}"/>
+                android:nestedScrollingEnabled="false"
+                app:setPagedLinearAdapter="@{model.getReviewAdapter()}" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false"
+                app:setLinearAdapter="@{model.getVideoAdapter()}"/>
+
 
         </LinearLayout>
 
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 
 </layout>

@@ -2,13 +2,13 @@
 <resources>
     <color name="colorPrimary">#151515</color>
     <color name="colorPrimaryDark">#151515</color>
-    <color name="colorAccent">#D81B60</color>
+    <color name="colorAccent">#9E9E9E</color>
 
     <color name="background">#151515</color>
     <color name="error">#ffffff</color>
     <color name="text">#ffffff</color>
 
-    <color name="circle_background">#80000000</color>
+    <color name="circle_background">#9E9E9E</color>
 
 
     <color name="progress_high_score">#98FB98</color>

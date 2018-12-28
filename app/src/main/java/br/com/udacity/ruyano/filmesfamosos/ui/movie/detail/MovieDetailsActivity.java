@@ -4,9 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
 
 import java.util.Objects;
 
@@ -14,12 +12,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.paging.PagedList;
 import br.com.udacity.ruyano.filmesfamosos.R;
 import br.com.udacity.ruyano.filmesfamosos.databinding.ActivityMovieDetailsBinding;
 import br.com.udacity.ruyano.filmesfamosos.model.Movie;
+import br.com.udacity.ruyano.filmesfamosos.model.Review;
 import br.com.udacity.ruyano.filmesfamosos.model.Video;
 import br.com.udacity.ruyano.filmesfamosos.model.VideoRequestResult;
-import butterknife.ButterKnife;
 
 public class MovieDetailsActivity extends AppCompatActivity {
 
@@ -62,6 +61,36 @@ public class MovieDetailsActivity extends AppCompatActivity {
 
         activityMovieDetailsBinding.setModel(viewModel);
 
+        setupVideoList(viewModel);
+
+        setupReviewList(viewModel);
+
+        viewModel.getVideos();
+    }
+
+    private void setupReviewList(final MovieDetailsViewModel viewModel) {
+        viewModel.reviewPagedList.observe(this, new Observer<PagedList<Review>>() {
+            @Override
+            public void onChanged(PagedList<Review> reviews) {
+                if (reviews != null && !reviews.isEmpty()) {
+                    viewModel.setReviewsInAdapter(reviews);
+                }
+            }
+        });
+    }
+
+    private void setupVideoListClick(MovieDetailsViewModel viewModel) {
+        viewModel.getSelectedVideo().observe(this, new Observer<Video>() {
+            @Override
+            public void onChanged(Video video) {
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse(getString(R.string.youtube_url, video.getKey())));
+                startActivity(intent);
+            }
+        });
+    }
+
+    private void setupVideoList(final MovieDetailsViewModel viewModel) {
         viewModel.getVideosLiveData().observe(this, new Observer<VideoRequestResult>() {
             @Override
             public void onChanged(VideoRequestResult videoRequestResult) {
@@ -72,16 +101,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
             }
         });
 
-        viewModel.getSelectedVideo().observe(this, new Observer<Video>() {
-            @Override
-            public void onChanged(Video video) {
-                Intent intent = new Intent(Intent.ACTION_VIEW);
-                intent.setData(Uri.parse(getString(R.string.youtube_url, video.getKey())));
-                startActivity(intent);
-            }
-        });
-
-        viewModel.getVideos();
+        setupVideoListClick(viewModel);
     }
 
     @Override

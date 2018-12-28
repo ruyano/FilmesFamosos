@@ -5,34 +5,61 @@ import android.view.View;
 import java.util.List;
 
 import androidx.databinding.ObservableInt;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
+import androidx.paging.LivePagedListBuilder;
+import androidx.paging.PagedList;
 import br.com.udacity.ruyano.filmesfamosos.model.Movie;
+import br.com.udacity.ruyano.filmesfamosos.model.Review;
 import br.com.udacity.ruyano.filmesfamosos.model.Video;
 import br.com.udacity.ruyano.filmesfamosos.model.VideoRequestResult;
+import br.com.udacity.ruyano.filmesfamosos.networking.data.sources.reviews.ReviewsDataSourceFactory;
 import br.com.udacity.ruyano.filmesfamosos.networking.data.sources.videos.VideosDataSource;
 
 public class MovieDetailsViewModel extends ViewModel {
 
     public MutableLiveData<Movie> movie;
-    public MutableLiveData<Video> selectedVideo;
+    private MutableLiveData<Video> selectedVideo;
     public ObservableInt showVideoIcone;
-    public VideoAdapter videoAdapter;
+    private VideoAdapter videoAdapter;
+    private ReviewAdapter reviewAdapter;
     private VideosDataSource videosDataSource;
+
+    //creating livedata for PagedList  and DataSource
+    LiveData<PagedList<Review>> reviewPagedList;
+    private ReviewsDataSourceFactory reviewsDataSourceFactory;
+
+    private void callForReviewList(Movie movie) {
+        //getting our data source factory
+        reviewsDataSourceFactory = new ReviewsDataSourceFactory(movie.getId());
+
+        //Getting PagedList config
+        PagedList.Config pagedListConfig =
+                (new PagedList.Config.Builder())
+                        .setEnablePlaceholders(false)
+                        .setPageSize(20).build();
+
+        //Building the paged list
+        reviewPagedList = (new LivePagedListBuilder(reviewsDataSourceFactory, pagedListConfig)).build();
+
+    }
 
     void init() {
         this.movie = new MutableLiveData<>();
         this.selectedVideo = new MutableLiveData<>();
         this.videoAdapter = new VideoAdapter(this);
+        this.reviewAdapter = new ReviewAdapter(this);
         this.showVideoIcone = new ObservableInt(View.GONE);
         this.videosDataSource = new VideosDataSource();
 
     }
 
     void setMovie(Movie movie) {
-        if (this.movie != null)
+        if (this.movie != null) {
             this.movie.setValue(movie);
-
+            callForReviewList(movie);
+        }
     }
 
     void getVideos() {
@@ -45,12 +72,17 @@ public class MovieDetailsViewModel extends ViewModel {
 
     }
 
-    public VideoAdapter getAdapter() {
+    public VideoAdapter getVideoAdapter() {
         return videoAdapter;
 
     }
 
-    public MutableLiveData<Video> getSelectedVideo() {
+    public ReviewAdapter getReviewAdapter() {
+        return reviewAdapter;
+
+    }
+
+    MutableLiveData<Video> getSelectedVideo() {
         return selectedVideo;
 
     }
@@ -61,6 +93,10 @@ public class MovieDetailsViewModel extends ViewModel {
 
     }
 
+    void setReviewsInAdapter(PagedList<Review> reviews) {
+        reviewAdapter.submitList(reviews);
+    }
+
     public Video getVideoAt(Integer index) {
         if (videosDataSource.getVideoRequestResultMutableLiveData().getValue() != null
                 && videosDataSource.getVideoRequestResultMutableLiveData().getValue().getVideos().size() > index) {
@@ -68,6 +104,14 @@ public class MovieDetailsViewModel extends ViewModel {
         }
         return null;
 
+    }
+
+    public Review getReviewAt(Integer index) {
+        if (reviewPagedList.getValue() != null
+                && reviewPagedList.getValue().size() > index) {
+            return reviewPagedList.getValue().get(index);
+        }
+        return null;
     }
 
     public void onItemClick(Integer index) {

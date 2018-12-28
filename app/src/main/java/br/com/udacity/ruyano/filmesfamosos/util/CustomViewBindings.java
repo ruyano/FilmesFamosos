@@ -33,6 +33,15 @@ public class CustomViewBindings {
 
     }
 
+    @BindingAdapter("setPagedLinearAdapter")
+    public static void bindPagedLinearRecyclerViewAdapter(RecyclerView recyclerView, PagedListAdapter<?,?> adapter) {
+        recyclerView.setHasFixedSize(true);
+        final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(recyclerView.getContext());
+        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.setAdapter(adapter);
+
+    }
+
     @BindingAdapter("setLinearAdapter")
     public static void bindLinearRecyclerViewAdapter(RecyclerView recyclerView, RecyclerView.Adapter adapter) {
         recyclerView.setHasFixedSize(true);

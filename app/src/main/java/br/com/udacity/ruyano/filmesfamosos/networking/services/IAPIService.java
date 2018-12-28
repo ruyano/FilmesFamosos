@@ -2,6 +2,7 @@ package br.com.udacity.ruyano.filmesfamosos.networking.services;
 
 import java.util.List;
 
+import br.com.udacity.ruyano.filmesfamosos.ReviewRequestResult;
 import br.com.udacity.ruyano.filmesfamosos.model.Language;
 import br.com.udacity.ruyano.filmesfamosos.model.MovieRequestResult;
 import br.com.udacity.ruyano.filmesfamosos.model.VideoRequestResult;
@@ -20,5 +21,8 @@ public interface IAPIService {
 
     @GET("/3/movie/{id}/videos")
     Call<VideoRequestResult> getVideos(@Path("id") Integer id);
+
+    @GET("/3/movie/{id}/reviews")
+    Call<ReviewRequestResult> getReviews(@Path("id") Integer id, @Query("page") Integer page);
 
 }

@@ -8,7 +8,6 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 import androidx.paging.LivePagedListBuilder;
-import androidx.paging.PageKeyedDataSource;
 import androidx.paging.PagedList;
 import br.com.udacity.ruyano.filmesfamosos.R;
 import br.com.udacity.ruyano.filmesfamosos.model.Movie;
@@ -32,13 +31,9 @@ public class MoviesListViewModel extends ViewModel {
     public ObservableInt statusTextVisibility;
     public ObservableInt statusTextResourceId;
 
-
-    //creating livedata for PagedList  and PagedKeyedDataSource
+    //creating livedata for PagedList  and DataSource
     LiveData<PagedList<Movie>> moviesPagedList;
-
-    private LiveData<PageKeyedDataSource<Integer, Movie>> liveDataSource;
-
-    private MoviesDataSourceFactory popularMoviesDataSourceFactory;
+    private MoviesDataSourceFactory moviesDataSourceFactory;
 
     void init() {
         adapter = new MoviesListAdapter(this);
@@ -56,18 +51,8 @@ public class MoviesListViewModel extends ViewModel {
 
     //constructor
     public MoviesListViewModel() {
-        callForPopularMovies("popular");
-    }
-
-    public void callForPopularMovies(String subList) {
-
-        if (popularMoviesDataSourceFactory != null)
-            popularMoviesDataSourceFactory.invalidateDataSource();
         //getting our data source factory
-        popularMoviesDataSourceFactory = new MoviesDataSourceFactory();
-
-        //getting the live data source from data source factory
-        liveDataSource = popularMoviesDataSourceFactory.getLiveDataSource();
+        moviesDataSourceFactory = new MoviesDataSourceFactory();
 
         //Getting PagedList config
         PagedList.Config pagedListConfig =
@@ -76,19 +61,18 @@ public class MoviesListViewModel extends ViewModel {
                         .setPageSize(20).build();
 
         //Building the paged list
-
-        moviesPagedList = (new LivePagedListBuilder(popularMoviesDataSourceFactory, pagedListConfig)).build();
+        moviesPagedList = (new LivePagedListBuilder(moviesDataSourceFactory, pagedListConfig)).build();
 
     }
 
     void setMoviesType(MoviesDataSource.MoviesTypeEnum moviesType) {
-        popularMoviesDataSourceFactory.setMoviesType(moviesType);
-        popularMoviesDataSourceFactory.invalidateDataSource();
+        moviesDataSourceFactory.setMoviesType(moviesType);
+        moviesDataSourceFactory.invalidateDataSource();
 
     }
 
     MoviesDataSource.MoviesTypeEnum getCurrentMovieType() {
-        return popularMoviesDataSourceFactory.getMoviesType();
+        return moviesDataSourceFactory.getMoviesType();
     }
 
     public MoviesListAdapter getAdapter() {
@@ -120,7 +104,7 @@ public class MoviesListViewModel extends ViewModel {
     public void onRefresh() {
         isLoading.set(true);
         recyclerViewVisibility.set(View.GONE);
-        popularMoviesDataSourceFactory.invalidateDataSource();
+        moviesDataSourceFactory.invalidateDataSource();
     }
 
     public void showNoInternetView() {
