@@ -1,4 +1,4 @@
-package br.com.udacity.ruyano.filmesfamosos.ui.movie.detail;
+package br.com.udacity.ruyano.filmesfamosos.ui.movie.detail.videos;
 
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -12,13 +12,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import br.com.udacity.ruyano.filmesfamosos.BR;
 import br.com.udacity.ruyano.filmesfamosos.R;
 import br.com.udacity.ruyano.filmesfamosos.model.Video;
+import br.com.udacity.ruyano.filmesfamosos.ui.movie.detail.MovieDetailsViewModel;
 
 public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> {
 
-    private MovieDetailsViewModel viewModel;
+    private MovieVideosViewModel viewModel;
     private List<Video> videos;
 
-    public VideoAdapter(MovieDetailsViewModel viewModel) {
+    public VideoAdapter(MovieVideosViewModel viewModel) {
         this.viewModel = viewModel;
     }
 
@@ -58,7 +59,7 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> 
             this.binding = binding;
         }
 
-        void bind(MovieDetailsViewModel viewModel, Integer position) {
+        void bind(MovieVideosViewModel viewModel, Integer position) {
             binding.setVariable(BR.viewModel, viewModel);
             binding.setVariable(BR.position, position);
             binding.executePendingBindings();

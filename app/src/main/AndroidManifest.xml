@@ -28,8 +28,11 @@
         <activity
             android:name=".ui.main.MainActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".mvvm.MvvmActivity" />
-        <activity android:name=".ui.movie.detail.review.MovieReviewsActivity"></activity>
+        <activity
+            android:name=".ui.movie.detail.review.MovieReviewsActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".ui.movie.detail.videos.MovieVideosActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

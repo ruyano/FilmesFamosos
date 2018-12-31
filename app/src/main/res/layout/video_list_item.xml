@@ -11,7 +11,7 @@
 
         <variable
             name="viewModel"
-            type="br.com.udacity.ruyano.filmesfamosos.ui.movie.detail.MovieDetailsViewModel" />
+            type="br.com.udacity.ruyano.filmesfamosos.ui.movie.detail.videos.MovieVideosViewModel" />
     </data>
 
     <RelativeLayout

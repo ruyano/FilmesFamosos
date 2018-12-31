@@ -1,4 +1,4 @@
-package br.com.udacity.ruyano.filmesfamosos.ui.movie.detail;
+package br.com.udacity.ruyano.filmesfamosos.ui.movie.detail.review;
 
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -15,7 +15,7 @@ import br.com.udacity.ruyano.filmesfamosos.model.Review;
 
 public class ReviewAdapter extends PagedListAdapter<Review, ReviewAdapter.ViewHolder> {
 
-    private MovieDetailsViewModel viewModel;
+    private MovieReviewsViewModel viewModel;
 
     private static DiffUtil.ItemCallback<Review> DIFF_CALLBACK =
             new DiffUtil.ItemCallback<Review>() {
@@ -30,7 +30,7 @@ public class ReviewAdapter extends PagedListAdapter<Review, ReviewAdapter.ViewHo
                 }
             };
 
-    public ReviewAdapter(MovieDetailsViewModel viewModel) {
+    public ReviewAdapter(MovieReviewsViewModel viewModel) {
         super(DIFF_CALLBACK);
         this.viewModel = viewModel;
     }
@@ -62,7 +62,7 @@ public class ReviewAdapter extends PagedListAdapter<Review, ReviewAdapter.ViewHo
             this.binding = binding;
         }
 
-        void bind(MovieDetailsViewModel viewModel, Integer position) {
+        void bind(MovieReviewsViewModel viewModel, Integer position) {
             binding.setVariable(BR.viewModel, viewModel);
             binding.setVariable(BR.position, position);
             binding.executePendingBindings();

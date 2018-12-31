@@ -6,6 +6,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
+import java.util.Objects;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
@@ -16,6 +18,7 @@ import br.com.udacity.ruyano.filmesfamosos.databinding.ActivityMainBinding;
 import br.com.udacity.ruyano.filmesfamosos.model.Movie;
 import br.com.udacity.ruyano.filmesfamosos.networking.data.sources.movies.MoviesDataSource;
 import br.com.udacity.ruyano.filmesfamosos.ui.movie.detail.MovieDetailsActivity;
+import br.com.udacity.ruyano.filmesfamosos.util.NetworkUtil;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -46,13 +49,13 @@ public class MainActivity extends AppCompatActivity {
             case R.id.popular:
                 if (viewModel.getCurrentMovieType() != MoviesDataSource.MoviesTypeEnum.POPULAR) {
                     viewModel.setMoviesType(MoviesDataSource.MoviesTypeEnum.POPULAR);
-                    getSupportActionBar().setTitle(getString(R.string.menu_popularity));
+                    Objects.requireNonNull(getSupportActionBar()).setTitle(getString(R.string.menu_popularity));
                 }
                 return true;
             case R.id.avaliation:
                 if (viewModel.getCurrentMovieType() != MoviesDataSource.MoviesTypeEnum.TOP_RATED) {
                     viewModel.setMoviesType(MoviesDataSource.MoviesTypeEnum.TOP_RATED);
-                    getSupportActionBar().setTitle(getString(R.string.menu_avaliation));
+                    Objects.requireNonNull(getSupportActionBar()).setTitle(getString(R.string.menu_avaliation));
                 }
                 return true;
             default:
@@ -69,7 +72,11 @@ public class MainActivity extends AppCompatActivity {
         }
         activityMainBinding.setModel(viewModel);
 
-        setupListUpdate();
+        if (NetworkUtil.isConected(this)) {
+            setupListUpdate();
+        } else {
+            viewModel.showNoInternetView();
+        }
 
     }
 

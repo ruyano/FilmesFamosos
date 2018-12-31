@@ -11,20 +11,32 @@
 
         <variable
             name="viewModel"
-            type="br.com.udacity.ruyano.filmesfamosos.ui.movie.detail.MovieDetailsViewModel" />
+            type="br.com.udacity.ruyano.filmesfamosos.ui.movie.detail.review.MovieReviewsViewModel" />
     </data>
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
+            android:layout_margin="10dp"
+            android:textColor="@android:color/white"
+            android:text="@{viewModel.getReviewAt(position).author}"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:text="@{viewModel.getReviewAt(position).content}"
             android:textColor="@android:color/white"/>
 
-    </RelativeLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/colorAccent" />
+
+    </LinearLayout>
 </layout>

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 
 import java.util.Objects;
 
@@ -19,6 +20,8 @@ import br.com.udacity.ruyano.filmesfamosos.model.Movie;
 import br.com.udacity.ruyano.filmesfamosos.model.Review;
 import br.com.udacity.ruyano.filmesfamosos.model.Video;
 import br.com.udacity.ruyano.filmesfamosos.model.VideoRequestResult;
+import br.com.udacity.ruyano.filmesfamosos.ui.movie.detail.review.MovieReviewsActivity;
+import br.com.udacity.ruyano.filmesfamosos.ui.movie.detail.videos.MovieVideosActivity;
 
 public class MovieDetailsActivity extends AppCompatActivity {
 
@@ -46,6 +49,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
     private void getExtras() {
         if (getIntent().getExtras() != null && getIntent().hasExtra(EXTRAS_MOVIE)) {
             this.movie = getIntent().getExtras().getParcelable(EXTRAS_MOVIE);
+            Objects.requireNonNull(getSupportActionBar()).setTitle(movie.getTitle());
         }
     }
 
@@ -61,47 +65,6 @@ public class MovieDetailsActivity extends AppCompatActivity {
 
         activityMovieDetailsBinding.setModel(viewModel);
 
-        setupVideoList(viewModel);
-
-        setupReviewList(viewModel);
-
-        viewModel.getVideos();
-    }
-
-    private void setupReviewList(final MovieDetailsViewModel viewModel) {
-        viewModel.reviewPagedList.observe(this, new Observer<PagedList<Review>>() {
-            @Override
-            public void onChanged(PagedList<Review> reviews) {
-                if (reviews != null && !reviews.isEmpty()) {
-                    viewModel.setReviewsInAdapter(reviews);
-                }
-            }
-        });
-    }
-
-    private void setupVideoListClick(MovieDetailsViewModel viewModel) {
-        viewModel.getSelectedVideo().observe(this, new Observer<Video>() {
-            @Override
-            public void onChanged(Video video) {
-                Intent intent = new Intent(Intent.ACTION_VIEW);
-                intent.setData(Uri.parse(getString(R.string.youtube_url, video.getKey())));
-                startActivity(intent);
-            }
-        });
-    }
-
-    private void setupVideoList(final MovieDetailsViewModel viewModel) {
-        viewModel.getVideosLiveData().observe(this, new Observer<VideoRequestResult>() {
-            @Override
-            public void onChanged(VideoRequestResult videoRequestResult) {
-                if (videoRequestResult != null && !videoRequestResult.getVideos().isEmpty()) {
-                    viewModel.setVideosInAdapter(videoRequestResult.getVideos());
-                }
-                // TODO - tratar caso de lista vazia
-            }
-        });
-
-        setupVideoListClick(viewModel);
     }
 
     @Override
@@ -113,5 +76,13 @@ public class MovieDetailsActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void showReviews(View view) {
+        startActivity(MovieReviewsActivity.getIntent(this, movie));
+    }
+
+    public void showVideos(View view) {
+        startActivity(MovieVideosActivity.getIntent(this, movie));
     }
 }

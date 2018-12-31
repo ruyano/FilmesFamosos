@@ -115,12 +115,14 @@
                             android:layout_width="40dp"
                             android:layout_height="40dp"
                             android:layout_marginEnd="10dp"
-                            android:src="@drawable/youtube"/>
+                            android:src="@drawable/youtube"
+                            android:onClick="showVideos"/>
 
                         <ImageView
                             android:layout_width="40dp"
                             android:layout_height="40dp"
-                            android:src="@drawable/review"/>
+                            android:src="@drawable/review"
+                            android:onClick="showReviews"/>
 
                     </LinearLayout>
 
@@ -136,19 +138,6 @@
                 android:textColor="@color/text"
                 android:text="@{model.movie.overview}"
                 android:textSize="14sp" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:nestedScrollingEnabled="false"
-                app:setPagedLinearAdapter="@{model.getReviewAdapter()}" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:nestedScrollingEnabled="false"
-                app:setLinearAdapter="@{model.getVideoAdapter()}"/>
-
 
         </LinearLayout>
 

@@ -7,7 +7,7 @@
 
         <variable
             name="model"
-            type="br.com.udacity.ruyano.filmesfamosos.ui.movie.detail.review.MovieReviewsViewModel" />
+            type="br.com.udacity.ruyano.filmesfamosos.ui.movie.detail.videos.MovieVideosViewModel" />
     </data>
 
     <RelativeLayout
@@ -19,8 +19,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:nestedScrollingEnabled="false"
-            android:visibility="@{model.recyclerViewVisibility}"
-            app:setLinearAdapter="@{model.getReviewAdapter()}"/>
+            app:setLinearAdapter="@{model.getVideoAdapter()}"
+            android:visibility="@{model.recyclerViewVisibility}" />
 
         <LinearLayout
             android:id="@+id/ll_status_view"
