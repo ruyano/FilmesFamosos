@@ -51,14 +51,21 @@ public class CustomViewBindings {
 
     }
 
+    @BindingAdapter("imageUrl")
+    public static void bindImageViewUrl(ImageView imageView, String imageUrl) {
+        GlideUtil.loadImage(imageView, imageUrl);
+
+    }
+
+
     @BindingAdapter("imageUrlMedium")
-    public static void bindRecyclerViewAdapterMedium(ImageView imageView, String imageUrl) {
+    public static void bindImageViewUrlMedium(ImageView imageView, String imageUrl) {
         GlideUtil.loadImage(imageView, imageUrl, ImageQuality.MEDIUM);
 
     }
 
     @BindingAdapter("imageUrlOriginal")
-    public static void bindRecyclerViewAdapterOriginal(ImageView imageView, String imageUrl) {
+    public static void bindImageViewUrlOriginal(ImageView imageView, String imageUrl) {
         GlideUtil.loadImage(imageView, imageUrl, ImageQuality.ORIGINAL);
 
     }

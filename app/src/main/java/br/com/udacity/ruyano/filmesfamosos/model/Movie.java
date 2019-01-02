@@ -11,11 +11,18 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity
 public class Movie implements Parcelable {
 
     @SerializedName("vote_count")
     private Integer voteCount;
 
+    @NonNull
+    @PrimaryKey
     @SerializedName("id")
     private Integer id;
 
@@ -39,9 +46,6 @@ public class Movie implements Parcelable {
 
     @SerializedName("original_title")
     private String originalTitle;
-
-    @SerializedName("genre_ids")
-    private List<Integer> genreIds = null;
 
     @SerializedName("backdrop_path")
     private String backdropPath;
@@ -127,14 +131,6 @@ public class Movie implements Parcelable {
         this.originalTitle = originalTitle;
     }
 
-    public List<Integer> getGenreIds() {
-        return genreIds;
-    }
-
-    public void setGenreIds(List<Integer> genreIds) {
-        this.genreIds = genreIds;
-    }
-
     public String getBackdropPath() {
         return backdropPath;
     }
@@ -186,12 +182,6 @@ public class Movie implements Parcelable {
         posterPath = in.readString();
         originalLanguage = in.readString();
         originalTitle = in.readString();
-        if (in.readByte() == 0x01) {
-            genreIds = new ArrayList<>();
-            in.readList(genreIds, Integer.class.getClassLoader());
-        } else {
-            genreIds = null;
-        }
         backdropPath = in.readString();
         byte adultVal = in.readByte();
         adult = adultVal == 0x02 ? null : adultVal != 0x00;
@@ -239,12 +229,6 @@ public class Movie implements Parcelable {
         dest.writeString(posterPath);
         dest.writeString(originalLanguage);
         dest.writeString(originalTitle);
-        if (genreIds == null) {
-            dest.writeByte((byte) (0x00));
-        } else {
-            dest.writeByte((byte) (0x01));
-            dest.writeList(genreIds);
-        }
         dest.writeString(backdropPath);
         if (adult == null) {
             dest.writeByte((byte) (0x02));

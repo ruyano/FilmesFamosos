@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import androidx.annotation.NonNull;
 import androidx.paging.PageKeyedDataSource;
-import br.com.udacity.ruyano.filmesfamosos.ReviewRequestResult;
+import br.com.udacity.ruyano.filmesfamosos.model.ReviewRequestResult;
 import br.com.udacity.ruyano.filmesfamosos.model.Review;
 import br.com.udacity.ruyano.filmesfamosos.networking.RetrofitConfig;
 import retrofit2.Response;

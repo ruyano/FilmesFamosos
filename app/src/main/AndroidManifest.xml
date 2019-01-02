@@ -31,8 +31,10 @@
         <activity
             android:name=".ui.movie.detail.review.MovieReviewsActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".ui.movie.detail.videos.MovieVideosActivity"
+        <activity
+            android:name=".ui.movie.detail.videos.MovieVideosActivity"
             android:screenOrientation="portrait" />
+        <activity android:name=".ui.favorites.FavoritesActivity"></activity>
     </application>
 
 </manifest>

@@ -104,7 +104,7 @@ public class MovieVideosViewModel extends ViewModel {
     void showEmptyView() {
         statusImageVisibility.set(View.VISIBLE);
         statusTextVisibility.set(View.VISIBLE);
-        statusTextResourceId.set(R.string.review_empty_message);
+        statusTextResourceId.set(R.string.video_empty_message);
         recyclerViewVisibility.set(View.GONE);
         statusImageResourceId.set(R.drawable.cade);
 

@@ -17,6 +17,7 @@ import br.com.udacity.ruyano.filmesfamosos.R;
 import br.com.udacity.ruyano.filmesfamosos.databinding.ActivityMainBinding;
 import br.com.udacity.ruyano.filmesfamosos.model.Movie;
 import br.com.udacity.ruyano.filmesfamosos.networking.data.sources.movies.MoviesDataSource;
+import br.com.udacity.ruyano.filmesfamosos.ui.favorites.FavoritesActivity;
 import br.com.udacity.ruyano.filmesfamosos.ui.movie.detail.MovieDetailsActivity;
 import br.com.udacity.ruyano.filmesfamosos.util.NetworkUtil;
 
@@ -29,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        getSupportActionBar().setTitle(getString(R.string.menu_popularity));
+        Objects.requireNonNull(getSupportActionBar()).setTitle(getString(R.string.menu_popularity));
 
         setupBindings(savedInstanceState);
 
@@ -57,6 +58,9 @@ public class MainActivity extends AppCompatActivity {
                     viewModel.setMoviesType(MoviesDataSource.MoviesTypeEnum.TOP_RATED);
                     Objects.requireNonNull(getSupportActionBar()).setTitle(getString(R.string.menu_avaliation));
                 }
+                return true;
+            case R.id.favorites:
+                startActivity(FavoritesActivity.getIntent(this));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

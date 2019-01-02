@@ -93,4 +93,8 @@ public class Video {
     public void setType(String type) {
         this.type = type;
     }
+
+    public String getThumbnailUrl() {
+        return "https://img.youtube.com/vi/" + key + "/default.jpg";
+    }
 }

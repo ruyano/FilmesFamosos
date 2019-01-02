@@ -1,9 +1,11 @@
 package br.com.udacity.ruyano.filmesfamosos.ui.main;
 
+import android.app.Application;
 import android.view.View;
 
 import androidx.databinding.ObservableBoolean;
 import androidx.databinding.ObservableInt;
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -13,8 +15,9 @@ import br.com.udacity.ruyano.filmesfamosos.R;
 import br.com.udacity.ruyano.filmesfamosos.model.Movie;
 import br.com.udacity.ruyano.filmesfamosos.networking.data.sources.movies.MoviesDataSource;
 import br.com.udacity.ruyano.filmesfamosos.networking.data.sources.movies.MoviesDataSourceFactory;
+import br.com.udacity.ruyano.filmesfamosos.repositories.MovieRepository;
 
-public class MoviesListViewModel extends ViewModel {
+public class MoviesListViewModel extends AndroidViewModel {
 
     private MoviesListAdapter adapter;
     private MutableLiveData<Movie> movieSelected;
@@ -33,7 +36,9 @@ public class MoviesListViewModel extends ViewModel {
 
     //creating livedata for PagedList  and DataSource
     LiveData<PagedList<Movie>> moviesPagedList;
+
     private MoviesDataSourceFactory moviesDataSourceFactory;
+
 
     void init() {
         adapter = new MoviesListAdapter(this);
@@ -50,7 +55,8 @@ public class MoviesListViewModel extends ViewModel {
     }
 
     //constructor
-    public MoviesListViewModel() {
+    public MoviesListViewModel(Application application) {
+        super(application);
         //getting our data source factory
         moviesDataSourceFactory = new MoviesDataSourceFactory();
 

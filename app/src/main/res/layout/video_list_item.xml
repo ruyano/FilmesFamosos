@@ -14,19 +14,38 @@
             type="br.com.udacity.ruyano.filmesfamosos.ui.movie.detail.videos.MovieVideosViewModel" />
     </data>
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorAccent"
+        android:orientation="horizontal"
+        android:layout_margin="5dp"
         android:onClick="@{() -> viewModel.onItemClick(position)}">
+
+        <RelativeLayout
+            android:layout_width="120dp"
+            android:layout_height="90dp">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:imageUrl="@{viewModel.getVideoAt(position).thumbnailUrl}"
+                android:background="@color/background"/>
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_centerInParent="true"
+                android:src="@drawable/play_button" />
+
+        </RelativeLayout>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
+            android:layout_gravity="center_vertical"
             android:layout_margin="10dp"
             android:text="@{viewModel.getVideoAt(position).name}"
             android:textColor="@android:color/white"/>
 
-    </RelativeLayout>
+    </LinearLayout>
 </layout>

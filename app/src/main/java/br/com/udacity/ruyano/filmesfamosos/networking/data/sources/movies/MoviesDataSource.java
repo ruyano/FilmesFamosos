@@ -7,6 +7,7 @@ import androidx.paging.PageKeyedDataSource;
 import br.com.udacity.ruyano.filmesfamosos.model.Movie;
 import br.com.udacity.ruyano.filmesfamosos.model.MovieRequestResult;
 import br.com.udacity.ruyano.filmesfamosos.networking.RetrofitConfig;
+import br.com.udacity.ruyano.filmesfamosos.repositories.MovieRepository;
 import retrofit2.Response;
 
 public class MoviesDataSource extends PageKeyedDataSource<Integer, Movie> {
@@ -69,7 +70,8 @@ public class MoviesDataSource extends PageKeyedDataSource<Integer, Movie> {
 
     public enum MoviesTypeEnum {
         POPULAR("popular"),
-        TOP_RATED("top_rated");
+        TOP_RATED("top_rated"),
+        FAVORITES("favorites");
 
         private String value;
 

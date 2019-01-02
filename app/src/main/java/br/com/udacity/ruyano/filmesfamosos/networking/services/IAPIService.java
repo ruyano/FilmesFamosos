@@ -2,7 +2,7 @@ package br.com.udacity.ruyano.filmesfamosos.networking.services;
 
 import java.util.List;
 
-import br.com.udacity.ruyano.filmesfamosos.ReviewRequestResult;
+import br.com.udacity.ruyano.filmesfamosos.model.ReviewRequestResult;
 import br.com.udacity.ruyano.filmesfamosos.model.Language;
 import br.com.udacity.ruyano.filmesfamosos.model.MovieRequestResult;
 import br.com.udacity.ruyano.filmesfamosos.model.VideoRequestResult;
