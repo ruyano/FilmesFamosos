@@ -113,7 +113,7 @@ public class MoviesListViewModel extends AndroidViewModel {
         moviesDataSourceFactory.invalidateDataSource();
     }
 
-    public void showNoInternetView() {
+    void showNoInternetView() {
         statusImageVisibility.set(View.VISIBLE);
         statusTextVisibility.set(View.VISIBLE);
         statusTextResourceId.set(R.string.no_internet_message);

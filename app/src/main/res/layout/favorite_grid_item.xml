@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="position"
+            type="java.lang.Integer" />
+
+        <variable
+            name="viewModel"
+            type="br.com.udacity.ruyano.filmesfamosos.ui.favorites.FavoritesViewModel" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:focusable="true"
+        android:onClick="@{() -> viewModel.onItemClick(position)}">
+
+        <ImageView
+            android:id="@+id/iv_movie_banner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/movie_banner_content_description"
+            android:padding="5dp"
+            android:scaleType="fitXY"
+            android:transitionName="@string/activity_mixed_trans_banner"
+            app:imageUrlMedium="@{viewModel.getMovieAt(position).posterPath}"
+            tools:src="@color/colorPrimaryDark" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_margin="10dp"
+            android:orientation="horizontal">
+
+            <RelativeLayout
+                android:id="@+id/rl_adult_view"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginEnd="10dp"
+                app:booleanVisibility="@{viewModel.getMovieAt(position).adult}"
+                android:transitionName="@string/activity_mixed_trans_adult">
+
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:contentDescription="@string/circle_background_content_description"
+                    android:src="@drawable/circle_background" />
+
+                <ImageView
+                    android:id="@+id/iv_adults_only"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_margin="5dp"
+                    android:contentDescription="@string/adults_only_content_description"
+                    android:src="@drawable/ic_plus_18_movie" />
+
+            </RelativeLayout>
+
+            <br.com.udacity.ruyano.filmesfamosos.util.UsersEvaluationView
+                android:id="@+id/uev_users_evaluation_view"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                app:userEvaluation="@{viewModel.getMovieAt(position).voteAverage}"
+                android:transitionName="@string/activity_mixed_trans_evaluation" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+</layout>

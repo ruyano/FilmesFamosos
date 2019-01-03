@@ -5,8 +5,9 @@
     <string name="activity_mixed_trans_evaluation">activity_mixed_trans_evaluation</string>
     <string name="activity_mixed_trans_adult">activity_mixed_trans_adult</string>
 
-    <string name="no_internet_message">Ops. Parece que você está sem internet, verifique sua conexão e tente novamente!</string>
+    <string name="no_internet_message">Ops. Parece que você está sem internet, verifique sua conexão e tente novamente! Ou acesso os seus favoritos pelo menu!</string>
     <string name="error_message">Ops. Estamos passando por dificuldades técnicas, por favor tente novamente mais tarde!</string>
+    <string name="error_favorites_message">Ops. Você ainda não tem nenhum favorito, adicione alguns filmes aos seus favoritos clicando na estrela e eles apareçerão aqui!</string>
     <string name="review_empty_message">Ops. Não temos nenhuma review para este filme.</string>
     <string name="video_empty_message">Ops. Não temos nenhum video para este filme.</string>
 
