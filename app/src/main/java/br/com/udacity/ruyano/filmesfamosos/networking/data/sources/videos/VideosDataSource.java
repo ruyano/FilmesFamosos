@@ -1,5 +1,7 @@
 package br.com.udacity.ruyano.filmesfamosos.networking.data.sources.videos;
 
+import android.util.Log;
+
 import androidx.lifecycle.MutableLiveData;
 import br.com.udacity.ruyano.filmesfamosos.model.VideoRequestResult;
 import br.com.udacity.ruyano.filmesfamosos.networking.RetrofitConfig;
@@ -24,7 +26,7 @@ public class VideosDataSource {
 
             @Override
             public void onFailure(Call<VideoRequestResult> call, Throwable t) {
-                // TODO - lidar com erro
+                Log.e("VideosDataSource", t.getLocalizedMessage());
             }
         });
     }
