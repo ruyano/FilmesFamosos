@@ -17,6 +17,6 @@
 
 ## O projeto utiliza AndroidX
   - Caso ocorra algum problema servifique-se de utilizar o Android Studio 3.2 RC 2 no mínimo e adicione as tags: 
-  android.useAndroidX=true 
+  android.useAndroidX=true </br>
   android.enableJetifier=true  
   ao gradle.properties.
