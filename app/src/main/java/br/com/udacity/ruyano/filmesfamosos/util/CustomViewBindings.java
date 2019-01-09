@@ -22,15 +22,6 @@ public class CustomViewBindings {
         recyclerView.setLayoutManager(gridLayoutManager);
         recyclerView.setAdapter(adapter);
 
-        adapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
-            @Override
-            public void onItemRangeInserted(int positionStart, int itemCount) {
-                if (positionStart == 0) {
-                    gridLayoutManager.scrollToPosition(0);
-                }
-            }
-        });
-
     }
 
     @BindingAdapter("setPagedLinearAdapter")

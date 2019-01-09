@@ -15,7 +15,6 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".ui.splash.SplashActivity"
-            android:screenOrientation="portrait"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,18 +23,14 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.movie.detail.MovieDetailsActivity"
-            android:screenOrientation="portrait" />
+            android:name=".ui.movie.detail.MovieDetailsActivity" />
         <activity
-            android:name=".ui.main.MainActivity"
-            android:screenOrientation="portrait" />
+            android:name=".ui.main.MainActivity" />
         <activity
-            android:name=".ui.movie.detail.review.MovieReviewsActivity"
-            android:screenOrientation="portrait" />
+            android:name=".ui.movie.detail.review.MovieReviewsActivity" />
         <activity
-            android:name=".ui.movie.detail.videos.MovieVideosActivity"
-            android:screenOrientation="portrait" />
-        <activity android:name=".ui.favorites.FavoritesActivity"></activity>
+            android:name=".ui.movie.detail.videos.MovieVideosActivity" />
+        <activity android:name=".ui.favorites.FavoritesActivity" />
     </application>
 
 </manifest>
