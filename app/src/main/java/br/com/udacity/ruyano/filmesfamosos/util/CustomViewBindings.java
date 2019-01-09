@@ -15,11 +15,10 @@ import br.com.udacity.ruyano.filmesfamosos.R;
 
 public class CustomViewBindings {
 
-    @BindingAdapter("setGridAdapter")
-    public static void bindGridRecyclerViewAdapter(RecyclerView recyclerView, PagedListAdapter<?,?> adapter) {
+    @BindingAdapter({"setGridAdapter", "setLayoutManager"})
+    public static void bindGridRecyclerViewAdapter(RecyclerView recyclerView, PagedListAdapter<?,?> adapter, RecyclerView.LayoutManager layoutManager) {
         recyclerView.setHasFixedSize(true);
-        final GridLayoutManager gridLayoutManager = new GridLayoutManager(recyclerView.getContext(), 2);
-        recyclerView.setLayoutManager(gridLayoutManager);
+        recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
 
     }

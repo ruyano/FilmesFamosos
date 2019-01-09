@@ -26,7 +26,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:visibility="@{model.recyclerViewVisibility}"
-                app:setGridAdapter="@{model.getAdapter()}" />
+                app:setGridAdapter="@{model.getAdapter()}"
+                app:setLayoutManager="@{model.getGridLayoutManager()}" />
 
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 

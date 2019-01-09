@@ -42,9 +42,7 @@ public class FavoritesActivity extends AppCompatActivity {
     private void setupBindings(Bundle savedInstanceState) {
         ActivityFavoritesBinding activityFavoritesBinding = DataBindingUtil.setContentView(this, R.layout.activity_favorites);
         favoritesViewModel = ViewModelProviders.of(this).get(FavoritesViewModel.class);
-        if (savedInstanceState == null) {
-            favoritesViewModel.init();
-        }
+        favoritesViewModel.init(savedInstanceState);
         activityFavoritesBinding.setModel(favoritesViewModel);
 
         setupListUpdate();
@@ -62,6 +60,7 @@ public class FavoritesActivity extends AppCompatActivity {
                     favoritesViewModel.showEmptyView();
                 } else {
                     favoritesViewModel.setMoviesInAdapter(movies);
+                    favoritesViewModel.restoreRecyclerViewInstanceState();
                 }
             }
         });
@@ -90,5 +89,14 @@ public class FavoritesActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        if (favoritesViewModel != null) {
+            favoritesViewModel.saveRecyclerViewInstanceState();
+        }
     }
 }

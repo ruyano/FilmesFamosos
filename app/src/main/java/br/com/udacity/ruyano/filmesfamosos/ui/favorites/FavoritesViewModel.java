@@ -1,6 +1,8 @@
 package br.com.udacity.ruyano.filmesfamosos.ui.favorites;
 
 import android.app.Application;
+import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -11,6 +13,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.paging.DataSource;
 import androidx.paging.LivePagedListBuilder;
 import androidx.paging.PagedList;
+import androidx.recyclerview.widget.GridLayoutManager;
 import br.com.udacity.ruyano.filmesfamosos.R;
 import br.com.udacity.ruyano.filmesfamosos.model.Movie;
 import br.com.udacity.ruyano.filmesfamosos.repositories.MovieRepository;
@@ -18,6 +21,8 @@ import br.com.udacity.ruyano.filmesfamosos.repositories.MovieRepository;
 public class FavoritesViewModel extends AndroidViewModel {
 
     private FavoritesAdapter adapter;
+    private GridLayoutManager gridLayoutManager;
+    private Parcelable gridLayoutManagerSavedStatus;
     private MutableLiveData<Movie> movieSelected;
     // recyclerView
     public ObservableInt recyclerViewVisibility;
@@ -47,19 +52,28 @@ public class FavoritesViewModel extends AndroidViewModel {
     }
 
 
-    public void init() {
-        adapter = new FavoritesAdapter(this);
-        recyclerViewVisibility = new ObservableInt(View.GONE);
-        movieSelected = new MutableLiveData<>();
-        statusImageVisibility = new ObservableInt(View.GONE);
-        statusImageResourceId = new ObservableInt(R.drawable.loading);
-        statusTextVisibility = new ObservableInt(View.GONE);
-        statusTextResourceId = new ObservableInt(R.string.error_favorites_message);
+    public void init(Bundle savedInstanceState) {
+        if (savedInstanceState == null) {
+            adapter = new FavoritesAdapter(this);
+            recyclerViewVisibility = new ObservableInt(View.GONE);
+            movieSelected = new MutableLiveData<>();
+            statusImageVisibility = new ObservableInt(View.GONE);
+            statusImageResourceId = new ObservableInt(R.drawable.loading);
+            statusTextVisibility = new ObservableInt(View.GONE);
+            statusTextResourceId = new ObservableInt(R.string.error_favorites_message);
+        }
+
+        gridLayoutManager = new GridLayoutManager(getApplication(), 2);
 
     }
 
     public FavoritesAdapter getAdapter() {
         return adapter;
+
+    }
+
+    public GridLayoutManager getGridLayoutManager() {
+        return gridLayoutManager;
 
     }
 
@@ -110,4 +124,14 @@ public class FavoritesViewModel extends AndroidViewModel {
     }
 
 
+    void saveRecyclerViewInstanceState() {
+        gridLayoutManagerSavedStatus = gridLayoutManager.onSaveInstanceState();
+    }
+
+    void restoreRecyclerViewInstanceState() {
+        if (gridLayoutManagerSavedStatus != null) {
+            gridLayoutManager.onRestoreInstanceState(gridLayoutManagerSavedStatus);
+            gridLayoutManagerSavedStatus = null;
+        }
+    }
 }

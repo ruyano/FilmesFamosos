@@ -2,6 +2,7 @@ package br.com.udacity.ruyano.filmesfamosos.ui.main;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -30,8 +31,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Objects.requireNonNull(getSupportActionBar()).setTitle(getString(R.string.menu_popularity));
-
         setupBindings(savedInstanceState);
 
     }
@@ -50,13 +49,11 @@ public class MainActivity extends AppCompatActivity {
             case R.id.popular:
                 if (viewModel.getCurrentMovieType() != MoviesDataSource.MoviesTypeEnum.POPULAR) {
                     viewModel.setMoviesType(MoviesDataSource.MoviesTypeEnum.POPULAR);
-                    Objects.requireNonNull(getSupportActionBar()).setTitle(getString(R.string.menu_popularity));
                 }
                 return true;
             case R.id.avaliation:
                 if (viewModel.getCurrentMovieType() != MoviesDataSource.MoviesTypeEnum.TOP_RATED) {
                     viewModel.setMoviesType(MoviesDataSource.MoviesTypeEnum.TOP_RATED);
-                    Objects.requireNonNull(getSupportActionBar()).setTitle(getString(R.string.menu_avaliation));
                 }
                 return true;
             case R.id.favorites:
@@ -71,10 +68,10 @@ public class MainActivity extends AppCompatActivity {
     private void setupBindings(Bundle savedInstanceState) {
         ActivityMainBinding activityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         viewModel = ViewModelProviders.of(this).get(MoviesListViewModel.class);
-        if (savedInstanceState == null) {
-            viewModel.init();
-        }
+        viewModel.init(savedInstanceState);
         activityMainBinding.setModel(viewModel);
+
+        setupActivityName();
 
         if (NetworkUtil.isConected(this)) {
             setupListUpdate();
@@ -82,6 +79,15 @@ public class MainActivity extends AppCompatActivity {
             viewModel.showNoInternetView();
         }
 
+    }
+
+    private void setupActivityName() {
+        viewModel.activityTitleResourceId.observe(this, new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer integer) {
+                Objects.requireNonNull(getSupportActionBar()).setTitle(getString(integer));
+            }
+        });
     }
 
     private void setupListUpdate() {
@@ -115,4 +121,21 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        if (viewModel != null) {
+            outState.putParcelable("LAYOUT_MANAGER_STATE", viewModel.saveRecyclerViewInstanceState());
+        }
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+        if (viewModel != null && savedInstanceState != null) {
+            viewModel.restoreRecyclerViewInstanceState(savedInstanceState.getParcelable("LAYOUT_MANAGER_STATE"));
+        }
+    }
 }
