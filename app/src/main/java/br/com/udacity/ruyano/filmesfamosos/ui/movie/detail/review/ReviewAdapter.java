@@ -25,7 +25,7 @@ public class ReviewAdapter extends PagedListAdapter<Review, ReviewAdapter.ViewHo
                 }
 
                 @Override
-                public boolean areContentsTheSame(Review oldItem, Review newItem) {
+                public boolean areContentsTheSame(Review oldItem, @NonNull Review newItem) {
                     return oldItem.equals(newItem);
                 }
             };

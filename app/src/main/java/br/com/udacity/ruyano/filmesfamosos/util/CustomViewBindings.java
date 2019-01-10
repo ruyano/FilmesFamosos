@@ -8,10 +8,8 @@ import com.bumptech.glide.Glide;
 
 import androidx.databinding.BindingAdapter;
 import androidx.paging.PagedListAdapter;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import br.com.udacity.ruyano.filmesfamosos.R;
 
 public class CustomViewBindings {
 
@@ -19,15 +17,6 @@ public class CustomViewBindings {
     public static void bindGridRecyclerViewAdapter(RecyclerView recyclerView, PagedListAdapter<?,?> adapter, RecyclerView.LayoutManager layoutManager) {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(adapter);
-
-    }
-
-    @BindingAdapter("setPagedLinearAdapter")
-    public static void bindPagedLinearRecyclerViewAdapter(RecyclerView recyclerView, PagedListAdapter<?,?> adapter) {
-        recyclerView.setHasFixedSize(true);
-        final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(recyclerView.getContext());
-        recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(adapter);
 
     }

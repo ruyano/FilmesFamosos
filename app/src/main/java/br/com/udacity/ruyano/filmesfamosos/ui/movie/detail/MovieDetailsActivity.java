@@ -3,11 +3,9 @@ package br.com.udacity.ruyano.filmesfamosos.ui.movie.detail;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
-import java.util.List;
 import java.util.Objects;
 
 import androidx.appcompat.app.AppCompatActivity;

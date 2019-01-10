@@ -16,11 +16,18 @@
     <string name="menu_favorites">Favoritos</string>
 
     <string name="status_image_content_description">Imagem para ilustrar o status da operção.</string>
-    <string name="movie_backdrop_content_description">Imagem de fundo do filme</string>
-    <string name="movie_banner_content_description">Cartaz do filme</string>
-    <string name="circle_background_content_description">Fundo em circulo</string>
-    <string name="adults_only_content_description">Imagen indicativa que o filme é para maiores de 18 anos</string>
+    <string name="movie_backdrop_content_description">Imagem de fundo do filme.</string>
+    <string name="movie_banner_content_description">Cartaz do filme.</string>
+    <string name="circle_background_content_description">Fundo em circulo.</string>
+    <string name="adults_only_content_description">Imagen indicativa que o filme é para maiores de 18 anos.</string>
     <string name="app_logo_content_description">Logotipo do app, gif de uma camera de cinema.</string>
+    <string name="star_favorite_description">Botão de favorito em formato de estrela.</string>
+    <string name="youtube_description">Botão de acesso à tela de trailers do filme.</string>
+    <string name="review_description">Botão de acesso à tela de reviews do filme.</string>
+    <string name="thumbnail_description">Thumbnail do trailer do filme.</string>
+    <string name="play_button_description">Botão de play.</string>
+
+    <string name="NR">NR</string>
 
     <string name="youtube_url">https://www.youtube.com/watch?v=%1$s</string>
 

@@ -6,10 +6,9 @@ import android.os.Parcelable;
 import com.google.gson.annotations.SerializedName;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
@@ -24,7 +23,7 @@ public class Movie implements Parcelable {
     @NonNull
     @PrimaryKey
     @SerializedName("id")
-    private Integer id;
+    private Integer id = 0;
 
     @SerializedName("video")
     private Boolean video;
@@ -67,11 +66,12 @@ public class Movie implements Parcelable {
         this.voteCount = voteCount;
     }
 
+    @NonNull
     public Integer getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(@NonNull Integer id) {
         this.id = id;
     }
 
@@ -173,7 +173,7 @@ public class Movie implements Parcelable {
 
     private Movie(Parcel in) {
         voteCount = in.readByte() == 0x00 ? null : in.readInt();
-        id = in.readByte() == 0x00 ? null : in.readInt();
+        id = Objects.requireNonNull(in.readByte() == 0x00 ? null : in.readInt());
         byte videoVal = in.readByte();
         video = videoVal == 0x02 ? null : videoVal != 0x00;
         voteAverage = in.readByte() == 0x00 ? null : in.readDouble();
@@ -202,12 +202,8 @@ public class Movie implements Parcelable {
             dest.writeByte((byte) (0x01));
             dest.writeInt(voteCount);
         }
-        if (id == null) {
-            dest.writeByte((byte) (0x00));
-        } else {
-            dest.writeByte((byte) (0x01));
-            dest.writeInt(id);
-        }
+        dest.writeByte((byte) (0x01));
+        dest.writeInt(id);
         if (video == null) {
             dest.writeByte((byte) (0x02));
         } else {

@@ -4,6 +4,7 @@ import android.content.Context;
 
 import java.util.List;
 
+import androidx.annotation.NonNull;
 import br.com.udacity.ruyano.filmesfamosos.model.Language;
 import br.com.udacity.ruyano.filmesfamosos.networking.RetrofitConfig;
 import br.com.udacity.ruyano.filmesfamosos.networking.services.IAPIService;
@@ -37,7 +38,7 @@ public class APIClient {
 
         this.service.getLanguages().enqueue(new Callback<List<Language>>() {
             @Override
-            public void onResponse(Call<List<Language>> call, Response<List<Language>> response) {
+            public void onResponse(@NonNull Call<List<Language>> call, @NonNull Response<List<Language>> response) {
                 if (response.isSuccessful()) {
                     listener.onRestSuccess(response.body());
                 } else {
@@ -46,13 +47,10 @@ public class APIClient {
             }
 
             @Override
-            public void onFailure(Call<List<Language>> call, Throwable t) {
+            public void onFailure(@NonNull Call<List<Language>> call, @NonNull Throwable t) {
                 listener.onFailure(t.getMessage());
             }
         });
     }
 
-    public void getVideos() {
-
-    }
 }

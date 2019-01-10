@@ -2,6 +2,7 @@ package br.com.udacity.ruyano.filmesfamosos.networking.data.sources.videos;
 
 import android.util.Log;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 import br.com.udacity.ruyano.filmesfamosos.model.VideoRequestResult;
 import br.com.udacity.ruyano.filmesfamosos.networking.RetrofitConfig;
@@ -20,12 +21,12 @@ public class VideosDataSource {
     public void getVideos(Integer id) {
         RetrofitConfig.getInstance().getApi().getVideos(id).enqueue(new Callback<VideoRequestResult>() {
             @Override
-            public void onResponse(Call<VideoRequestResult> call, Response<VideoRequestResult> response) {
+            public void onResponse(@NonNull Call<VideoRequestResult> call, @NonNull Response<VideoRequestResult> response) {
                 videoRequestResultMutableLiveData.postValue(response.body());
             }
 
             @Override
-            public void onFailure(Call<VideoRequestResult> call, Throwable t) {
+            public void onFailure(@NonNull Call<VideoRequestResult> call, @NonNull Throwable t) {
                 Log.e("VideosDataSource", t.getLocalizedMessage());
             }
         });

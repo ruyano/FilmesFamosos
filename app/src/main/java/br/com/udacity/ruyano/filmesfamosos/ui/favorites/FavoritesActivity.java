@@ -1,5 +1,12 @@
 package br.com.udacity.ruyano.filmesfamosos.ui.favorites;
 
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.MenuItem;
+
+import java.util.Objects;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
@@ -9,14 +16,6 @@ import br.com.udacity.ruyano.filmesfamosos.R;
 import br.com.udacity.ruyano.filmesfamosos.databinding.ActivityFavoritesBinding;
 import br.com.udacity.ruyano.filmesfamosos.model.Movie;
 import br.com.udacity.ruyano.filmesfamosos.ui.movie.detail.MovieDetailsActivity;
-import br.com.udacity.ruyano.filmesfamosos.util.NetworkUtil;
-
-import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.MenuItem;
-
-import java.util.Objects;
 
 public class FavoritesActivity extends AppCompatActivity {
 

@@ -1,6 +1,7 @@
 package br.com.udacity.ruyano.filmesfamosos.networking.data.sources.reviews;
 
 import java.io.IOException;
+import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.paging.PageKeyedDataSource;
@@ -24,7 +25,7 @@ public class ReviewsDataSource extends PageKeyedDataSource<Integer, Review> {
     public void loadInitial(@NonNull LoadInitialParams<Integer> params, @NonNull LoadInitialCallback<Integer, Review> callback) {
         try {
             Response<ReviewRequestResult> resultResponse = RetrofitConfig.getInstance().getApi().getReviews(movieId, FIRST_PAGE).execute();
-            callback.onResult(resultResponse.body().getReviews(), null, FIRST_PAGE + 1);
+            callback.onResult(Objects.requireNonNull(resultResponse.body()).getReviews(), null, FIRST_PAGE + 1);
         } catch (IOException e) {
             e.printStackTrace();
         }

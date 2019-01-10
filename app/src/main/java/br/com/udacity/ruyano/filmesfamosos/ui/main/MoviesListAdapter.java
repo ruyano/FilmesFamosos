@@ -25,7 +25,7 @@ public class MoviesListAdapter extends PagedListAdapter<Movie, MoviesListAdapter
                 }
 
                 @Override
-                public boolean areContentsTheSame(Movie oldItem, Movie newItem) {
+                public boolean areContentsTheSame(Movie oldItem, @NonNull Movie newItem) {
                     return oldItem.equals(newItem);
                 }
             };

@@ -2,7 +2,6 @@ package br.com.udacity.ruyano.filmesfamosos.ui.main;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -102,6 +101,7 @@ public class MainActivity extends AppCompatActivity {
                     viewModel.showErrorView();
                 } else {
                     viewModel.setMoviesInAdapter(movies);
+                    viewModel.restoreRecyclerViewInstanceState();
                 }
             }
         });
@@ -126,16 +126,7 @@ public class MainActivity extends AppCompatActivity {
         super.onSaveInstanceState(outState);
 
         if (viewModel != null) {
-            outState.putParcelable("LAYOUT_MANAGER_STATE", viewModel.saveRecyclerViewInstanceState());
-        }
-    }
-
-    @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-
-        if (viewModel != null && savedInstanceState != null) {
-            viewModel.restoreRecyclerViewInstanceState(savedInstanceState.getParcelable("LAYOUT_MANAGER_STATE"));
+            viewModel.saveRecyclerViewInstanceState();
         }
     }
 }

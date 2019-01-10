@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import java.text.DecimalFormat;
 
+import androidx.core.content.ContextCompat;
 import br.com.udacity.ruyano.filmesfamosos.R;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -50,7 +51,7 @@ public class UsersEvaluationView extends RelativeLayout {
             progressBar.setProgress(progress);
             setProgressColorByScore(value);
         } else {
-            tvPercentage.setText("NR");
+            tvPercentage.setText(getContext().getString(R.string.NR));
             progressBar.setMax(10);
             progressBar.setProgress(0);
             setProgressColorByScore(null);
@@ -65,20 +66,20 @@ public class UsersEvaluationView extends RelativeLayout {
 
     private void setProgressColorByScore(Double score) {
         if (score == null) {
-            changeProgressBarColors(super.getContext().getResources().getColor(R.color.progress_none_score),
-                    super.getContext().getResources().getColor(R.color.progress_none_score_background));
+            changeProgressBarColors(ContextCompat.getColor(getContext(), R.color.progress_none_score),
+                    ContextCompat.getColor(getContext(), R.color.progress_none_score_background));
         } else if (score >= 7.5) {
-            changeProgressBarColors(super.getContext().getResources().getColor(R.color.progress_high_score),
-                    super.getContext().getResources().getColor(R.color.progress_high_score_background));
+            changeProgressBarColors(ContextCompat.getColor(getContext(), R.color.progress_high_score),
+                    ContextCompat.getColor(getContext(), R.color.progress_high_score_background));
         } else if (score >= 5) {
-            changeProgressBarColors(super.getContext().getResources().getColor(R.color.progress_good_score),
-                    super.getContext().getResources().getColor(R.color.progress_good_score_background));
+            changeProgressBarColors(ContextCompat.getColor(getContext(), R.color.progress_good_score),
+                    ContextCompat.getColor(getContext(), R.color.progress_good_score_background));
         } else if (score >= 2.5) {
-            changeProgressBarColors(super.getContext().getResources().getColor(R.color.progress_low_score),
-                    super.getContext().getResources().getColor(R.color.progress_low_score_background));
+            changeProgressBarColors(ContextCompat.getColor(getContext(), R.color.progress_low_score),
+                    ContextCompat.getColor(getContext(), R.color.progress_low_score_background));
         } else {
-            changeProgressBarColors(super.getContext().getResources().getColor(R.color.progress_lowest_score),
-                    super.getContext().getResources().getColor(R.color.progress_lowest_score_background));
+            changeProgressBarColors(ContextCompat.getColor(getContext(), R.color.progress_lowest_score),
+                    ContextCompat.getColor(getContext(), R.color.progress_lowest_score_background));
         }
     }
 

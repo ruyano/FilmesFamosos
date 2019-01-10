@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import br.com.udacity.ruyano.filmesfamosos.BR;
 import br.com.udacity.ruyano.filmesfamosos.R;
 import br.com.udacity.ruyano.filmesfamosos.model.Video;
-import br.com.udacity.ruyano.filmesfamosos.ui.movie.detail.MovieDetailsViewModel;
 
 public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> {
 

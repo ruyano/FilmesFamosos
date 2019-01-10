@@ -1,13 +1,13 @@
 package br.com.udacity.ruyano.filmesfamosos.networking.data.sources.movies;
 
 import java.io.IOException;
+import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.paging.PageKeyedDataSource;
 import br.com.udacity.ruyano.filmesfamosos.model.Movie;
 import br.com.udacity.ruyano.filmesfamosos.model.MovieRequestResult;
 import br.com.udacity.ruyano.filmesfamosos.networking.RetrofitConfig;
-import br.com.udacity.ruyano.filmesfamosos.repositories.MovieRepository;
 import retrofit2.Response;
 
 public class MoviesDataSource extends PageKeyedDataSource<Integer, Movie> {
@@ -25,7 +25,7 @@ public class MoviesDataSource extends PageKeyedDataSource<Integer, Movie> {
     public void loadInitial(@NonNull LoadInitialParams<Integer> params, @NonNull LoadInitialCallback<Integer, Movie> callback) {
         try {
             Response<MovieRequestResult> response = RetrofitConfig.getInstance().getApi().getMovies(moviesType.getValue(), FIRST_PAGE).execute();
-            callback.onResult(response.body().getResults(), null, FIRST_PAGE + 1);
+            callback.onResult(Objects.requireNonNull(response.body()).getResults(), null, FIRST_PAGE + 1);
         } catch (IOException e) {
             e.printStackTrace();
         }

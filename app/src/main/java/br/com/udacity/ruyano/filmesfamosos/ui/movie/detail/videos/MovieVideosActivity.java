@@ -13,14 +13,10 @@ import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import br.com.udacity.ruyano.filmesfamosos.R;
-import br.com.udacity.ruyano.filmesfamosos.databinding.ActivityMovieReviewBinding;
 import br.com.udacity.ruyano.filmesfamosos.databinding.ActivityMovieVideosBinding;
 import br.com.udacity.ruyano.filmesfamosos.model.Movie;
 import br.com.udacity.ruyano.filmesfamosos.model.Video;
 import br.com.udacity.ruyano.filmesfamosos.model.VideoRequestResult;
-import br.com.udacity.ruyano.filmesfamosos.ui.movie.detail.MovieDetailsViewModel;
-import br.com.udacity.ruyano.filmesfamosos.ui.movie.detail.review.MovieReviewsActivity;
-import br.com.udacity.ruyano.filmesfamosos.ui.movie.detail.review.MovieReviewsViewModel;
 import br.com.udacity.ruyano.filmesfamosos.util.NetworkUtil;
 
 public class MovieVideosActivity extends AppCompatActivity {

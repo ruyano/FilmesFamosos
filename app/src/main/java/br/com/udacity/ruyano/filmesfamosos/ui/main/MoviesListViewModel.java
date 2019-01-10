@@ -10,7 +10,6 @@ import androidx.databinding.ObservableInt;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 import androidx.paging.LivePagedListBuilder;
 import androidx.paging.PagedList;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -18,12 +17,12 @@ import br.com.udacity.ruyano.filmesfamosos.R;
 import br.com.udacity.ruyano.filmesfamosos.model.Movie;
 import br.com.udacity.ruyano.filmesfamosos.networking.data.sources.movies.MoviesDataSource;
 import br.com.udacity.ruyano.filmesfamosos.networking.data.sources.movies.MoviesDataSourceFactory;
-import br.com.udacity.ruyano.filmesfamosos.repositories.MovieRepository;
 
 public class MoviesListViewModel extends AndroidViewModel {
 
     private MoviesListAdapter adapter;
     private GridLayoutManager gridLayoutManager;
+    private Parcelable gridLaytoutSavedInstanceState = null;
     private MutableLiveData<Movie> movieSelected;
     public ObservableBoolean isLoading;
 
@@ -174,13 +173,14 @@ public class MoviesListViewModel extends AndroidViewModel {
 
     }
 
-    Parcelable saveRecyclerViewInstanceState() {
-        return gridLayoutManager.onSaveInstanceState();
+    void saveRecyclerViewInstanceState() {
+        gridLaytoutSavedInstanceState = gridLayoutManager.onSaveInstanceState();
     }
 
-    void restoreRecyclerViewInstanceState(Parcelable savedInstanceState) {
-        if (savedInstanceState != null) {
-            gridLayoutManager.onRestoreInstanceState(savedInstanceState);
+    void restoreRecyclerViewInstanceState() {
+        if (gridLaytoutSavedInstanceState != null) {
+            gridLayoutManager.onRestoreInstanceState(gridLaytoutSavedInstanceState);
+            gridLaytoutSavedInstanceState = null;
         }
     }
 }

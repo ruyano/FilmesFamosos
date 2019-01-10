@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 
 import java.io.IOException;
 
+import androidx.annotation.NonNull;
 import br.com.udacity.ruyano.filmesfamosos.BuildConfig;
 import br.com.udacity.ruyano.filmesfamosos.networking.services.IAPIService;
 import br.com.udacity.ruyano.filmesfamosos.util.Constants;
@@ -30,7 +31,7 @@ public class RetrofitConfig {
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
         httpClient.addInterceptor(new Interceptor() {
             @Override
-            public Response intercept(Chain chain) throws IOException {
+            public Response intercept(@NonNull Chain chain) throws IOException {
                 Request original = chain.request();
                 HttpUrl originalHttpUrl = original.url();
 

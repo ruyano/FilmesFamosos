@@ -1,18 +1,5 @@
 package br.com.udacity.ruyano.filmesfamosos.ui.movie.detail.review;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.databinding.DataBindingUtil;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
-import androidx.paging.PagedList;
-import br.com.udacity.ruyano.filmesfamosos.R;
-import br.com.udacity.ruyano.filmesfamosos.databinding.ActivityMainBinding;
-import br.com.udacity.ruyano.filmesfamosos.databinding.ActivityMovieReviewBinding;
-import br.com.udacity.ruyano.filmesfamosos.model.Movie;
-import br.com.udacity.ruyano.filmesfamosos.model.Review;
-import br.com.udacity.ruyano.filmesfamosos.ui.main.MoviesListViewModel;
-import br.com.udacity.ruyano.filmesfamosos.util.NetworkUtil;
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -20,9 +7,20 @@ import android.view.MenuItem;
 
 import java.util.Objects;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.paging.PagedList;
+import br.com.udacity.ruyano.filmesfamosos.R;
+import br.com.udacity.ruyano.filmesfamosos.databinding.ActivityMovieReviewBinding;
+import br.com.udacity.ruyano.filmesfamosos.model.Movie;
+import br.com.udacity.ruyano.filmesfamosos.model.Review;
+import br.com.udacity.ruyano.filmesfamosos.util.NetworkUtil;
+
 public class MovieReviewsActivity extends AppCompatActivity {
 
-    public static final String EXTRAS_MOVIE = "EXTRAS_MOVIE";
+    private static final String EXTRAS_MOVIE = "EXTRAS_MOVIE";
 
     private MovieReviewsViewModel viewModel;
 
