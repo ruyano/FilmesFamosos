@@ -21,8 +21,6 @@ import br.com.udacity.ruyano.filmesfamosos.networking.data.sources.movies.Movies
 public class MoviesListViewModel extends AndroidViewModel {
 
     private MoviesListAdapter adapter;
-    private GridLayoutManager gridLayoutManager;
-    private Parcelable gridLaytoutSavedInstanceState = null;
     private MutableLiveData<Movie> movieSelected;
     public ObservableBoolean isLoading;
 
@@ -45,25 +43,21 @@ public class MoviesListViewModel extends AndroidViewModel {
     private MoviesDataSourceFactory moviesDataSourceFactory;
 
 
-    void init(Bundle savedInstanceState) {
-        if (savedInstanceState == null) {
-            adapter = new MoviesListAdapter(this);
-            recyclerViewVisibility = new ObservableInt(View.GONE);
-            movieSelected = new MutableLiveData<>();
-            isLoading = new ObservableBoolean(false);
+    void init() {
+        adapter = new MoviesListAdapter(this);
+        recyclerViewVisibility = new ObservableInt(View.GONE);
+        movieSelected = new MutableLiveData<>();
+        isLoading = new ObservableBoolean(false);
 
-            statusImageVisibility = new ObservableInt(View.GONE);
-            statusImageResourceId = new ObservableInt(R.drawable.loading);
+        statusImageVisibility = new ObservableInt(View.GONE);
+        statusImageResourceId = new ObservableInt(R.drawable.loading);
 
-            statusTextVisibility = new ObservableInt(View.GONE);
-            statusTextResourceId = new ObservableInt(R.string.no_internet_message);
+        statusTextVisibility = new ObservableInt(View.GONE);
+        statusTextResourceId = new ObservableInt(R.string.no_internet_message);
 
-            activityTitleResourceId = new MutableLiveData<>();
-            activityTitleResourceId.postValue(R.string.menu_popularity);
+        activityTitleResourceId = new MutableLiveData<>();
+        activityTitleResourceId.postValue(R.string.menu_popularity);
 
-        }
-
-        gridLayoutManager = new GridLayoutManager(getApplication(), 2);
     }
 
     //constructor
@@ -102,11 +96,6 @@ public class MoviesListViewModel extends AndroidViewModel {
 
     public MoviesListAdapter getAdapter() {
         return adapter;
-
-    }
-
-    public GridLayoutManager getGridLayoutManager() {
-        return gridLayoutManager;
 
     }
 
@@ -173,14 +162,4 @@ public class MoviesListViewModel extends AndroidViewModel {
 
     }
 
-    void saveRecyclerViewInstanceState() {
-        gridLaytoutSavedInstanceState = gridLayoutManager.onSaveInstanceState();
-    }
-
-    void restoreRecyclerViewInstanceState() {
-        if (gridLaytoutSavedInstanceState != null) {
-            gridLayoutManager.onRestoreInstanceState(gridLaytoutSavedInstanceState);
-            gridLaytoutSavedInstanceState = null;
-        }
-    }
 }

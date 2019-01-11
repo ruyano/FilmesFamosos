@@ -22,11 +22,10 @@
             app:refreshing="@{model.isLoading}" >
 
             <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/movies_recyclerview"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:visibility="@{model.recyclerViewVisibility}"
-                app:setGridAdapter="@{model.getAdapter()}"
-                app:setLayoutManager="@{model.getGridLayoutManager()}" />
+                android:visibility="@{model.recyclerViewVisibility}" />
 
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 

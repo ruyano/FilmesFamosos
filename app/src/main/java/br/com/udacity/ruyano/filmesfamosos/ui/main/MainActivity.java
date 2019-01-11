@@ -2,6 +2,7 @@ package br.com.udacity.ruyano.filmesfamosos.ui.main;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -13,6 +14,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.paging.PagedList;
+import androidx.recyclerview.widget.GridLayoutManager;
 import br.com.udacity.ruyano.filmesfamosos.R;
 import br.com.udacity.ruyano.filmesfamosos.databinding.ActivityMainBinding;
 import br.com.udacity.ruyano.filmesfamosos.model.Movie;
@@ -23,7 +25,11 @@ import br.com.udacity.ruyano.filmesfamosos.util.NetworkUtil;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final String RECYCLERVIEW_SAVED_STATE = "RECYCLERVIEW_SAVED_STATE";
+
     private MoviesListViewModel viewModel;
+    private ActivityMainBinding activityMainBinding;
+    private Parcelable recyclerViewSavedInstance;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +38,16 @@ public class MainActivity extends AppCompatActivity {
 
         setupBindings(savedInstanceState);
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (recyclerViewSavedInstance != null) {
+            activityMainBinding.moviesRecyclerview.getLayoutManager().onRestoreInstanceState(recyclerViewSavedInstance);
+            recyclerViewSavedInstance = null;
+        }
     }
 
     @Override
@@ -65,12 +81,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setupBindings(Bundle savedInstanceState) {
-        ActivityMainBinding activityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+        activityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         viewModel = ViewModelProviders.of(this).get(MoviesListViewModel.class);
-        viewModel.init(savedInstanceState);
+        if (savedInstanceState == null)
+            viewModel.init();
         activityMainBinding.setModel(viewModel);
 
         setupActivityName();
+        setupRecyclerView();
 
         if (NetworkUtil.isConected(this)) {
             setupListUpdate();
@@ -87,6 +105,14 @@ public class MainActivity extends AppCompatActivity {
                 Objects.requireNonNull(getSupportActionBar()).setTitle(getString(integer));
             }
         });
+
+    }
+
+    private void setupRecyclerView() {
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
+        activityMainBinding.moviesRecyclerview.setLayoutManager(gridLayoutManager);
+        activityMainBinding.moviesRecyclerview.setAdapter(viewModel.getAdapter());
+
     }
 
     private void setupListUpdate() {
@@ -101,7 +127,6 @@ public class MainActivity extends AppCompatActivity {
                     viewModel.showErrorView();
                 } else {
                     viewModel.setMoviesInAdapter(movies);
-                    viewModel.restoreRecyclerViewInstanceState();
                 }
             }
         });
@@ -125,8 +150,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        if (viewModel != null) {
-            viewModel.saveRecyclerViewInstanceState();
-        }
+        outState.putParcelable(RECYCLERVIEW_SAVED_STATE, Objects.requireNonNull(activityMainBinding.moviesRecyclerview.getLayoutManager()).onSaveInstanceState());
+
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+        recyclerViewSavedInstance = savedInstanceState.getParcelable(RECYCLERVIEW_SAVED_STATE);
     }
 }
