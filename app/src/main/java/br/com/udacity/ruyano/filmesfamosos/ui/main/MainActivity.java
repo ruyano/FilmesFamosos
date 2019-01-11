@@ -35,7 +35,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         setupBindings(savedInstanceState);
 
     }
@@ -43,11 +42,12 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
         if (recyclerViewSavedInstance != null) {
-            activityMainBinding.moviesRecyclerview.getLayoutManager().onRestoreInstanceState(recyclerViewSavedInstance);
+            Objects.requireNonNull(activityMainBinding.moviesRecyclerview.getLayoutManager()).onRestoreInstanceState(recyclerViewSavedInstance);
             recyclerViewSavedInstance = null;
+
         }
+
     }
 
     @Override
@@ -76,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
+
         }
 
     }
@@ -86,10 +87,8 @@ public class MainActivity extends AppCompatActivity {
         if (savedInstanceState == null)
             viewModel.init();
         activityMainBinding.setModel(viewModel);
-
         setupActivityName();
         setupRecyclerView();
-
         if (NetworkUtil.isConected(this)) {
             setupListUpdate();
         } else {
@@ -103,6 +102,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onChanged(Integer integer) {
                 Objects.requireNonNull(getSupportActionBar()).setTitle(getString(integer));
+
             }
         });
 
@@ -117,7 +117,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupListUpdate() {
         viewModel.showLoadinView();
-
         viewModel.moviesPagedList.observe(this, new Observer<PagedList<Movie>>() {
             @Override
             public void onChanged(PagedList<Movie> movies) {
@@ -128,9 +127,9 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     viewModel.setMoviesInAdapter(movies);
                 }
+
             }
         });
-
         setupListClick();
 
     }
@@ -143,6 +142,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
                 viewModel.resetMovieSelected();
                 setupListClick();
+
             }
         });
 
@@ -151,7 +151,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-
         outState.putParcelable(RECYCLERVIEW_SAVED_STATE, Objects.requireNonNull(activityMainBinding.moviesRecyclerview.getLayoutManager()).onSaveInstanceState());
 
     }
@@ -159,7 +158,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-
         recyclerViewSavedInstance = savedInstanceState.getParcelable(RECYCLERVIEW_SAVED_STATE);
+
     }
+
 }

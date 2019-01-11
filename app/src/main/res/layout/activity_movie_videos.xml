@@ -15,10 +15,10 @@
         android:background="@color/background" >
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/videos_recyclerview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:nestedScrollingEnabled="false"
-            app:setLinearAdapter="@{model.getVideoAdapter()}"
             android:visibility="@{model.recyclerViewVisibility}" />
 
         <LinearLayout

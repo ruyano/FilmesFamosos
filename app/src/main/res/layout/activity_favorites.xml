@@ -15,11 +15,10 @@
         android:background="@color/background">
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/favorites_recyclerview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="@{model.recyclerViewVisibility}"
-            app:setGridAdapter="@{model.getAdapter()}"
-            app:setLayoutManager="@{model.getGridLayoutManager()}" />
+            android:visibility="@{model.recyclerViewVisibility}" />
 
         <LinearLayout
             android:id="@+id/ll_status_view"

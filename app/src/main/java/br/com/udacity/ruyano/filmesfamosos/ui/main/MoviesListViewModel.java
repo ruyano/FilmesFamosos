@@ -1,8 +1,6 @@
 package br.com.udacity.ruyano.filmesfamosos.ui.main;
 
 import android.app.Application;
-import android.os.Bundle;
-import android.os.Parcelable;
 import android.view.View;
 
 import androidx.databinding.ObservableBoolean;
@@ -12,7 +10,6 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.paging.LivePagedListBuilder;
 import androidx.paging.PagedList;
-import androidx.recyclerview.widget.GridLayoutManager;
 import br.com.udacity.ruyano.filmesfamosos.R;
 import br.com.udacity.ruyano.filmesfamosos.model.Movie;
 import br.com.udacity.ruyano.filmesfamosos.networking.data.sources.movies.MoviesDataSource;

@@ -15,11 +15,11 @@
         android:background="@color/background" >
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/review_recyclerview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:nestedScrollingEnabled="false"
-            android:visibility="@{model.recyclerViewVisibility}"
-            app:setLinearAdapter="@{model.getReviewAdapter()}"/>
+            android:visibility="@{model.recyclerViewVisibility}" />
 
         <LinearLayout
             android:id="@+id/ll_status_view"

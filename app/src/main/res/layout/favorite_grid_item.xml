@@ -16,15 +16,15 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="300dp"
         android:clickable="true"
         android:focusable="true"
         android:onClick="@{() -> viewModel.onItemClick(position)}">
 
         <ImageView
             android:id="@+id/iv_movie_banner"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
             android:layout_centerInParent="true"
             android:adjustViewBounds="true"
             android:contentDescription="@string/movie_banner_content_description"
@@ -37,7 +37,7 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
+            android:layout_alignEnd="@+id/iv_movie_banner"
             android:layout_margin="10dp"
             android:orientation="horizontal">
 

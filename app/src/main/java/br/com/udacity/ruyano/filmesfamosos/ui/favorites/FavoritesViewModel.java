@@ -1,8 +1,6 @@
 package br.com.udacity.ruyano.filmesfamosos.ui.favorites;
 
 import android.app.Application;
-import android.os.Bundle;
-import android.os.Parcelable;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -13,7 +11,6 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.paging.DataSource;
 import androidx.paging.LivePagedListBuilder;
 import androidx.paging.PagedList;
-import androidx.recyclerview.widget.GridLayoutManager;
 import br.com.udacity.ruyano.filmesfamosos.R;
 import br.com.udacity.ruyano.filmesfamosos.model.Movie;
 import br.com.udacity.ruyano.filmesfamosos.repositories.MovieRepository;
@@ -21,8 +18,6 @@ import br.com.udacity.ruyano.filmesfamosos.repositories.MovieRepository;
 public class FavoritesViewModel extends AndroidViewModel {
 
     private FavoritesAdapter adapter;
-    private GridLayoutManager gridLayoutManager;
-    private Parcelable gridLayoutManagerSavedStatus;
     private MutableLiveData<Movie> movieSelected;
     // recyclerView
     public ObservableInt recyclerViewVisibility;
@@ -35,12 +30,11 @@ public class FavoritesViewModel extends AndroidViewModel {
 
     //creating livedata for PagedList  and DataSource
     LiveData<PagedList<Movie>> moviesPagedList;
-    private DataSource.Factory datasourceFactory;
 
     public FavoritesViewModel(@NonNull Application application) {
         super(application);
 
-        datasourceFactory = new MovieRepository(getApplication()).getAllMoviesPaged();
+        DataSource.Factory datasourceFactory = new MovieRepository(getApplication()).getAllMoviesPaged();
 
         PagedList.Config pagedListConfig =
                 (new PagedList.Config.Builder())
@@ -52,19 +46,14 @@ public class FavoritesViewModel extends AndroidViewModel {
     }
 
 
-    public void init(Bundle savedInstanceState) {
-        if (savedInstanceState == null) {
-            adapter = new FavoritesAdapter(this);
-            recyclerViewVisibility = new ObservableInt(View.GONE);
-            movieSelected = new MutableLiveData<>();
-            statusImageVisibility = new ObservableInt(View.GONE);
-            statusImageResourceId = new ObservableInt(R.drawable.loading);
-            statusTextVisibility = new ObservableInt(View.GONE);
-            statusTextResourceId = new ObservableInt(R.string.error_favorites_message);
-        }
-
-        gridLayoutManager = new GridLayoutManager(getApplication(), 2);
-
+    public void init() {
+        adapter = new FavoritesAdapter(this);
+        recyclerViewVisibility = new ObservableInt(View.GONE);
+        movieSelected = new MutableLiveData<>();
+        statusImageVisibility = new ObservableInt(View.GONE);
+        statusImageResourceId = new ObservableInt(R.drawable.loading);
+        statusTextVisibility = new ObservableInt(View.GONE);
+        statusTextResourceId = new ObservableInt(R.string.error_favorites_message);
     }
 
     public FavoritesAdapter getAdapter() {
@@ -72,23 +61,26 @@ public class FavoritesViewModel extends AndroidViewModel {
 
     }
 
-    public GridLayoutManager getGridLayoutManager() {
-        return gridLayoutManager;
+    public void resetMovieSelected() {
+        movieSelected = new MutableLiveData<>();
 
     }
 
     void setMoviesInAdapter(PagedList<Movie> movies) {
         adapter.submitList(movies);
+
     }
 
     MutableLiveData<Movie> getMovieSelected() {
         return movieSelected;
+
     }
 
     public void onItemClick(Integer index) {
         Movie selected = getMovieAt(index);
         if (selected != null)
             movieSelected.setValue(selected);
+
     }
 
     public Movie getMovieAt(Integer index) {
@@ -97,6 +89,7 @@ public class FavoritesViewModel extends AndroidViewModel {
             return moviesPagedList.getValue().get(index);
         }
         return null;
+
     }
 
     void showEmptyView() {
@@ -123,15 +116,4 @@ public class FavoritesViewModel extends AndroidViewModel {
 
     }
 
-
-    void saveRecyclerViewInstanceState() {
-        gridLayoutManagerSavedStatus = gridLayoutManager.onSaveInstanceState();
-    }
-
-    void restoreRecyclerViewInstanceState() {
-        if (gridLayoutManagerSavedStatus != null) {
-            gridLayoutManager.onRestoreInstanceState(gridLayoutManagerSavedStatus);
-            gridLayoutManagerSavedStatus = null;
-        }
-    }
 }

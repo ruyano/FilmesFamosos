@@ -19,7 +19,6 @@ public class MovieReviewsViewModel extends ViewModel {
 
     //creating livedata for PagedList  and DataSource
     LiveData<PagedList<Review>> reviewPagedList;
-    private ReviewsDataSourceFactory reviewsDataSourceFactory;
 
     public ObservableBoolean isLoading;
 
@@ -47,7 +46,7 @@ public class MovieReviewsViewModel extends ViewModel {
 
     public void callForReviewList(Movie movie) {
         //getting our data source factory
-        reviewsDataSourceFactory = new ReviewsDataSourceFactory(movie.getId());
+        ReviewsDataSourceFactory reviewsDataSourceFactory = new ReviewsDataSourceFactory(movie.getId());
 
         //Getting PagedList config
         PagedList.Config pagedListConfig =
