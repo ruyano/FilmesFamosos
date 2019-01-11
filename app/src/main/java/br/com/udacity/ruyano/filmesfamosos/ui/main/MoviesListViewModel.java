@@ -109,6 +109,10 @@ public class MoviesListViewModel extends AndroidViewModel {
 
     }
 
+    public void resetMovieSelected() {
+        this.movieSelected = new MutableLiveData<>();
+    }
+
     public Movie getMovieAt(Integer index) {
         if (moviesPagedList.getValue() != null
                 && moviesPagedList.getValue().size() > index) {

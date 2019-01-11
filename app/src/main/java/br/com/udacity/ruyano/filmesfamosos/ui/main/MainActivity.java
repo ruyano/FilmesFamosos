@@ -141,6 +141,8 @@ public class MainActivity extends AppCompatActivity {
             public void onChanged(Movie movie) {
                 Intent intent = MovieDetailsActivity.getIntent(MainActivity.this, movie);
                 startActivity(intent);
+                viewModel.resetMovieSelected();
+                setupListClick();
             }
         });
 
