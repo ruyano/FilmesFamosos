@@ -15,8 +15,3 @@
   
   - Sua API KEY deve ser adicionada no arquivo gradle.properties, em uma nova variável chamada: THEMOVIEDB_API_KEY
 
-## O projeto utiliza AndroidX
-  - Caso ocorra algum problema servifique-se de utilizar o Android Studio 3.2 RC 2 no mínimo e adicione as tags: 
-  android.useAndroidX=true </br>
-  android.enableJetifier=true  
-  ao gradle.properties.
